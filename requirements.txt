@@ -1,0 +1,8 @@
+python-novaclient
+requests
+paramiko
+selenium
+pytest
+flake8
+unittest2
+
