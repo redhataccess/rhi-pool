@@ -1,0 +1,5 @@
+[openstack_vms]
+username=<username>
+api_key=<api_key/password>
+auth_url=<auth_url for openstack instance>
+project_id=<project_id>
