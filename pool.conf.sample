@@ -3,3 +3,9 @@ username=<username>
 api_key=<api_key/password>
 auth_url=<auth_url for openstack instance>
 project_id=<project_id>
+
+[rhn_login]
+base_url=<base_url>
+rhn_username=<username>
+rhn_password=<password>
+
