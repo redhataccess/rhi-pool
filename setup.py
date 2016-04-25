@@ -4,10 +4,10 @@ with open('requirements.txt') as f:
   requirements = f.read()
 
 setup(
-  name='rhi',
+  name='rhi-pool',
   version='0.1.0',
-  description='rhi is a test suit.',
-  author='Rhi QE Team',
+  description='Red Hat Insights tests',
+  author='Anisha Narang, Kanchan Katare',
   url='https://github.com/redhataccess/rhi-pool',
   packages=find_packages(exclude=['tests*']),
   package_data={'': ['LICENSE']},
