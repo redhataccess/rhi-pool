@@ -5,3 +5,4 @@ selenium
 pytest
 flake8
 unittest2
+configparser
