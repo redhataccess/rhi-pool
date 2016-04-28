@@ -9,3 +9,6 @@ base_url=<base_url>
 rhn_username=<username>
 rhn_password=<password>
 
+[rhn_register]
+rh_username=<username>
+rh_password=<password>

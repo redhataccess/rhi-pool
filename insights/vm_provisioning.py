@@ -21,8 +21,8 @@ class VirtualMachine():
     def __init__(self):
         self.config=configparser.ConfigParser()
         self.config.read("pool.conf")
-        self.rhn_username = self.config.get('rhn_login', 'rhn_username')
-        self.rhn_password = self.config.get('rhn_login', 'rhn_password')
+        self.rhn_username = self.config.get('rhn_register', 'rh_username')
+        self.rhn_password = self.config.get('rhn_register', 'rh_password')
 
     def get_openstack_client_instance(self):
         """

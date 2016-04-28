@@ -2,6 +2,7 @@ python-novaclient
 requests
 paramiko
 selenium
+fauxfactory
 pytest
 flake8
 unittest2
