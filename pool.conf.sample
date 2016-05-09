@@ -12,3 +12,9 @@ rhn_password=<password>
 [rhn_register]
 rh_username=<username>
 rh_password=<password>
+
+[repo]
+rhel6_repo= <rhel6_base_repo>
+rhel7_repo=<rhel7_base_repo>
+insights_repo_el6=<insights_el6>
+insights_repo_el7=<insights_el7>
