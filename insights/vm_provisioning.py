@@ -23,6 +23,10 @@ class VirtualMachine():
         self.config.read("pool.conf")
         self.rhn_username = self.config.get('rhn_register', 'rh_username')
         self.rhn_password = self.config.get('rhn_register', 'rh_password')
+        self.rhel6_repo = self.config.get('repo', 'rhel6_repo')
+        self.rhel7_repo = self.config.get('repo', 'rhel7_repo')
+        self.insights_repo_el6 = self.config.get('repo', 'insights_repo_el6')
+        self.insights_repo_el7 = self.config.get('repo', 'insights_repo_el7')
 
     def get_openstack_client_instance(self):
         """
@@ -119,7 +123,7 @@ class VirtualMachine():
             else:
                 time.sleep(5)
 
-    def rhsm_register(self):
+    def rhsm_register(self, distro):
         """
         Register VM to subscription manager
         :return:
@@ -147,15 +151,42 @@ class VirtualMachine():
         print stdout.channel.recv_exit_status()
         print stdout.read(), stderr.read()
         print "RHSM registration done"
-
         cmd = 'sudo subscription-manager attach --auto'
         stdin, stdout, stderr = self.ssh_client.exec_command(cmd, get_pty=True)
         print stdout.read()
-        status = stdout.channel.recv_exit_status()
-        if status == 0:
-            print "Auto subscription attached"
-        else:
-            raise VMError("Unable to attach auto subscription")
+
+        cmd = 'sudo subscription-manager repos --disable=*'
+        stdin,stdout, stderr = self.ssh_client.exec_command(cmd, get_pty=True)
+        print stdout.read()
+        print stderr.read()
+        if distro == 'rhel6':
+            cmd = 'sudo subscription-manager repos --enable=rhel-6-server-rpms'
+            rhel_repo = self.rhel6_repo
+            insights_repo = self.insights_repo_el6
+        elif distro == 'rhel7':
+            cmd = 'sudo subscription-manager repos --enable=rhel-7-server-rpms'
+            rhel_repo = self.rhel7_repo
+            insights_repo = self.insights_repo_el7
+        stdin, stdout, stderr = self.ssh_client.exec_command(cmd, get_pty=True)
+        print stdout.read()
+        print stderr.read()
+
+        cmd =  'sudo curl -o /etc/yum.repos.d/rhel.repo {0}'.format(rhel_repo)
+        stdin, stdout, stderr = self.ssh_client.exec_command(cmd, get_pty=True)
+        print stdout.read()
+        print stderr.read()
+        cmd =  'cat /etc/yum.repos.d/rhel.repo'
+        stdin, stdout, stderr = self.ssh_client.exec_command(cmd, get_pty=True)
+        print stdout.read()
+        print stderr.read()
+        cmd =  'sudo curl -o /etc/yum.repos.d/insights.repo {0}'.format(insights_repo)
+        stdin, stdout, stderr = self.ssh_client.exec_command(cmd, get_pty=True)
+        print stdout.read()
+        print stderr.read()
+        cmd = 'sudo yum-config-manager --enable insights-insights-client'
+        stdin, stdout, stderr = self.ssh_client.exec_command(cmd, get_pty=True)
+        print stdout.read()
+        print stderr.read()
 
     def register_to_insights(self):
         """
@@ -163,9 +194,10 @@ class VirtualMachine():
         Register the client to Red Hat Insights service
         :return:
         """
-        self.rhsm_register()
+
         stdin,stdout,stderr = self.ssh_client.exec_command("sudo yum install -y redhat-access-insights", get_pty=True)
         print stdout.read()
+        print stderr.read()
         if stdout.channel.recv_exit_status() != 0:
             raise VMError("Unable to install redhat-access-insights rpm")
 
@@ -176,17 +208,16 @@ class VirtualMachine():
         print stdout.read()
         if stdout.channel.recv_exit_status() != 0:
             print stderr.read()
-            raise VMError("Registration to RHI not successful")
+            raise VMError("Registration to Red Hat Insights not successful")
 
         stdin, stdout, stderr =  self.ssh_client.exec_command("sudo redhat-access-insights", get_pty=True)
         print stdout.read()
         if stdout.channel.recv_exit_status() !=0:
             raise VMError("Upload not successful")
 
-        stdin, stdout, stderr = self.ssh_client.exec_command("cat /etc/redhat-access-insights/machine-id")
+        stdin, stdout, stderr = self.ssh_client.exec_command("sudo cat /etc/redhat-access-insights/machine-id", get_pty=True)
         self.machine_id = stdout.read()
-        print self.machine_id
-        return self.machine_id
+        print 'machine id: {0}'.format(self.machine_id)
 
     def unregister_from_rhi(self):
         """
