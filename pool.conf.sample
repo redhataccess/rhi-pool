@@ -13,6 +13,17 @@ rhn_password=<password>
 rh_username=<username>
 rh_password=<password>
 
+[certs]
+cert_path=/path/to/cert.pem
+key_path=/path/to/key.pem
+
+[env]
+# If you are running your tests against QA or CI env, you need to provide following details
+# for the insights client to upload data to the respective env.
+env_base_url=<base upload URL for insights for qa/ci>
+env_username=<username>
+env_password=<password>
+
 [repo]
 rhel6_repo= <rhel6_base_repo>
 rhel7_repo=<rhel7_base_repo>
