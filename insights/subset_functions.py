@@ -1,6 +1,4 @@
 import hashlib
-#import json
-
 
 def create_subset_payload(branch_id, system_ids):
     """
@@ -15,7 +13,6 @@ def create_subset_payload(branch_id, system_ids):
         "machine_ids": system_ids
     }
     return payload
-
 
 def get_subset_id(branch_id, system_ids):
     """
