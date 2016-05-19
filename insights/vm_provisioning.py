@@ -5,9 +5,9 @@ import novaclient
 import time
 from novaclient import client
 import paramiko
-import configparser
 import sys
 import subprocess
+from insights.config import Settings
 
 
 class VMError(Exception):
@@ -16,17 +16,17 @@ class VMError(Exception):
 
     """
 
-class VirtualMachine():
+
+class VirtualMachine(Settings):
 
     def __init__(self):
-        self.config=configparser.ConfigParser()
-        self.config.read("pool.conf")
-        self.rhn_username = self.config.get('rhn_register', 'rh_username')
-        self.rhn_password = self.config.get('rhn_register', 'rh_password')
-        self.rhel6_repo = self.config.get('repo', 'rhel6_repo')
-        self.rhel7_repo = self.config.get('repo', 'rhel7_repo')
-        self.insights_repo_el6 = self.config.get('repo', 'insights_repo_el6')
-        self.insights_repo_el7 = self.config.get('repo', 'insights_repo_el7')
+        super(VirtualMachine, self).__init__()
+        self.rhn_username = self.get('rhn_register', 'rh_username')
+        self.rhn_password = self.get('rhn_register', 'rh_password')
+        self.rhel6_repo = self.get('repo', 'rhel6_repo')
+        self.rhel7_repo = self.get('repo', 'rhel7_repo')
+        self.insights_repo_el6 = self.get('repo', 'insights_repo_el6')
+        self.insights_repo_el7 = self.get('repo', 'insights_repo_el7')
 
     def get_openstack_client_instance(self):
         """
@@ -34,10 +34,10 @@ class VirtualMachine():
         :return: openstack client object
 
         """
-        username = self.config.get('openstack_vms','username')
-        api_key = self.config.get('openstack_vms', 'api_key')
-        auth_url = self.config.get('openstack_vms', 'auth_url')
-        project_id = self.config.get('openstack_vms', 'project_id')
+        username = self.get('openstack_vms','username')
+        api_key = self.get('openstack_vms', 'api_key')
+        auth_url = self.get('openstack_vms', 'auth_url')
+        project_id = self.get('openstack_vms', 'project_id')
         with client.Client(
             version=2, username=username,
             api_key=api_key, auth_url=auth_url, project_id=project_id
@@ -46,7 +46,7 @@ class VirtualMachine():
             return openstack_client
 
     def create_openstack_instance(self, instance_name, image_name, flavor_name,
-                                  key_name, pool_name, timeout=5 ):
+                                  key_name, pool_name, timeout=10 ):
         self.os_client = self.get_openstack_client_instance()
         print "List of existing servers: {0}".format(self.os_client.servers.list())
         image = self.os_client.images.find(name=image_name)
