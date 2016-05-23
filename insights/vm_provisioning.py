@@ -134,7 +134,8 @@ class VirtualMachine(Settings):
         self.ssh_client.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
         while True:
             try:
-                self.ssh_client.connect(hostname=ip, username="cloud-user")
+                self.ssh_client.connect(hostname=ip, username="cloud-user",
+                                        key_filename = "~/.ssh/jenkins_key")
                 print "SSH connection established"
                 break
             except paramiko.ssh_exception.NoValidConnectionsError:
