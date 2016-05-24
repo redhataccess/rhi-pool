@@ -4,6 +4,9 @@ api_key=<api_key/password>
 auth_url=<auth_url for openstack instance>
 project_id=<project_id>
 
+[ssh]
+key_path=/path/to/jenkins_key
+
 [rhn_login]
 base_url=<base_url>
 rhn_username=<username>
@@ -12,6 +15,9 @@ rhn_password=<password>
 [rhn_register]
 rh_username=<username>
 rh_password=<password>
+
+[api]
+url=<api endpoint base url>
 
 [certs]
 cert_path=/path/to/cert.pem
