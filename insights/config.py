@@ -9,3 +9,8 @@ class Settings(object):
 
     def get(self, section, option):
         return self.config.get(section, option)
+
+    def get_certs(self):
+        cert = self.get('certs', 'cert_path')
+        key = self.get('certs', 'key_path')
+        return cert, key
