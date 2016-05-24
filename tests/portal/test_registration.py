@@ -11,7 +11,7 @@ class ClientRegisterTestCase(unittest.TestCase):
         self.vm = VirtualMachine()
         self.vm_name = 'vm_{0}'.format(gen_string('alpha', 6))
         self.vm.create_openstack_instance(instance_name=self.vm_name, image_name='RHEL-7.1-x86_64',
-                                          flavor_name='Tiny', key_name='key1', pool_name='public')
+                                          flavor_name='Tiny', key_name='jenkins-key', pool_name='public')
         self.driver = webdriver.Firefox()
         self.login = LoginUI(self.driver)
         self.driver.get(self.login.base_url)
