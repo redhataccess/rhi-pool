@@ -1,6 +1,7 @@
 import paramiko
 import logging
 from insights.config import Settings
+import time
 
 logger = logging.getLogger(__name__)
 
