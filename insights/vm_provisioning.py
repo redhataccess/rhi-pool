@@ -8,7 +8,7 @@ import paramiko
 import sys
 import subprocess
 from insights.config import Settings
-
+from insights.ssh import SSHConnection
 
 class VMError(Exception):
     """
@@ -123,23 +123,17 @@ class VirtualMachine(Settings):
             else:
                 time.sleep(5)
 
+
+
+
     def rhsm_register(self, distro):
         """
         Register VM to subscription manager
         :return:
         """
         ip = self.floating_ip.ip
-        self.ssh_client = paramiko.SSHClient()
-        print self.ssh_client
-        self.ssh_client.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
-        while True:
-            try:
-                self.ssh_client.connect(hostname=ip, username="cloud-user",
-                                        key_filename = "~/.ssh/jenkins_key")
-                print "SSH connection established"
-                break
-            except paramiko.ssh_exception.NoValidConnectionsError:
-                time.sleep(5)
+        ssh = SSHConnection()
+        self.ssh_client = ssh.get_ssh_connection(ip)
 
         stdin, stdout, stderr = self.ssh_client.exec_command("hostname")
         self.hostname = stdout.read()
