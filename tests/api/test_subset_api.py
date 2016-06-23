@@ -9,7 +9,8 @@ from insights.config import Settings
 
 class SubsetAPITestCase(unittest.TestCase):
 
-  def setUp(self):
+  @classmethod
+  def setup_class(self):
     self.vm1 = VirtualMachine()
     self.vm2 = VirtualMachine()
     self.vm1_name = 'vm_{0}'.format(gen_string('alpha', 6))
@@ -30,30 +31,31 @@ class SubsetAPITestCase(unittest.TestCase):
     print self.session.cert
     self.base_url = self.setting.get('api', 'url')
 
-  def test_subset_api(self):
-    system_ids = []
+  def test_subset_api_v1(self):
+    self.system_ids = []
     print self.vm1
     self.vm1.rhsm_register(distro='rhel7')
     self.vm1.register_to_insights()
     print self.vm1.hostname
     print self.vm1.machine_id
 
-    system_ids.append(self.vm1.machine_id)
+    self.system_ids.append(self.vm1.machine_id)
 
     self.vm2.rhsm_register(distro='rhel7')
     self.vm2.register_to_insights()
     print self.vm2
     print self.vm2.hostname
     print self.vm2.machine_id
-    system_ids.append(self.vm2.machine_id)
-    print system_ids
+    self.system_ids.append(self.vm2.machine_id)
+    print self.system_ids
 
     #create branch id
-    branch_id = 'branch_{0}'.format(gen_string('alpha',12))
-    payload = create_subset_payload(branch_id, system_ids)
-    print payload
+    self.branch_id = 'branch_{0}'.format(gen_string('alpha',12))
+    self.payload = create_subset_payload(self.branch_id, self.system_ids)
+    print self.payload
+    # creating subsets at /v1/subsets
     subset_create = self.session.post(self.base_url + '/v1/subsets',
-                                      json = payload)
+                                      json = self.payload)
     print subset_create.ok
     if subset_create.ok == True:
         print "Subset created successfully"
@@ -63,7 +65,7 @@ class SubsetAPITestCase(unittest.TestCase):
     response = subset_create.json()
     print response
     assert response["hash"] is not None
-    assert response["length"] == len(system_ids)
+    assert response["length"] == len(self.system_ids)
 
     #Creating get request for the system_ids from a subset hash
     print "get request"
@@ -75,9 +77,40 @@ class SubsetAPITestCase(unittest.TestCase):
     for system in response:
         print system
         print system["system_id"]
-        self.assertIn(system["system_id"], system_ids)
+        self.assertIn(system["system_id"], self.system_ids)
+    print "assertion for /v1/subsets done, checking for /subsets... "
 
-  def tearDown(self):
+    # check subset creation without /v1
+    self.branch_id = 'branch_{0}'.format(gen_string('alpha',12))
+    self.payload = create_subset_payload(self.branch_id, self.system_ids)
+    print self.payload
+    subset_create = self.session.post(self.base_url + '/subsets',
+                                      json = self.payload)
+    print subset_create.ok
+    if subset_create.ok == True:
+        print "Subset created successfully for /subsets"
+    else:
+        print subset_create.status_code, subset_create.text
+
+    response = subset_create.json()
+    print response
+    assert response["hash"] is not None
+    assert response["length"] == len(self.system_ids)
+
+    #Creating get request for the system_ids from a subset hash
+    print "get request"
+    get_subset = self.session.get(self.base_url + '/subsets/' + response["hash"] + '/systems')
+    print get_subset.ok
+    print get_subset.text
+
+    response = get_subset.json()
+    for system in response:
+        print system
+        print system["system_id"]
+        self.assertIn(system["system_id"], self.system_ids)
+
+  @classmethod
+  def teardown_class(self):
     self.vm1.unregister_from_rhi()
     self.vm1.unregister_from_RHSM()
     self.vm1.delete_openstack_instance(instance_name=self.vm1_name)
