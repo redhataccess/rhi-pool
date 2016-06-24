@@ -12,8 +12,10 @@ class LoginUI(SeleniumUtility, Settings):
 
     def login_to_portal(self):
         username_field = self.find_element(login_page_locators['username_field'])
+        username_field.clear()
         username_field.send_keys(self.username)
         password_field = self.find_element(login_page_locators['password_field'])
+        password_field.clear()
         password_field.send_keys(self.password)
         submit_btn = self.find_element(login_page_locators['submit_btn'])
         submit_btn.click()
