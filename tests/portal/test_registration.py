@@ -27,9 +27,9 @@ class ClientRegisterTestCase(unittest.TestCase):
             self.search = UISearch(self.driver)
             self.result_text = self.search.register_system(self.host_name)
             self.assertIn(self.host_name, self.result_text)
-        except Exception as e:
-            print e
+        except Exception as err:
             self.search.take_screenshot()
+            raise err
 
     def tearDown(self):
         self.vm.unregister_from_rhi()

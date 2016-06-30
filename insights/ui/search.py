@@ -2,6 +2,7 @@ import locators
 from navigator import Navigator
 from datetime import datetime
 from selenium_utility import SeleniumUtility
+from selenium.webdriver.common.keys import Keys
 
 
 class UISearch(SeleniumUtility):
@@ -10,12 +11,20 @@ class UISearch(SeleniumUtility):
         self.nav = Navigator(self.browser)
 
     def register_system(self, hostname):
-        # Click on system tab
-        self.nav.go_to_system_tab()
-        filter_field = self.find_element(locators.insights_page_locators['filter'])
-        filter_field.click()
-        filter_field.send_keys(hostname)
-        result = self.find_element(locators.insights_page_locators['result']).text
+        # Go to inventory tab
+        self.nav.go_to_inventory_tab()
+        # Enter hostname in search field
+        search_field = self.find_element(locators.inventory_page_locators['search_box'])
+        search_field.send_keys(hostname)
+        # Click enter
+        search_field.send_keys(Keys.RETURN)
+        search_field.send_keys(Keys.RETURN)
+        search_field.send_keys(Keys.RETURN)
+        self.browser.implicitly_wait(10)
+        # Find hostname in list
+        result1 = self.browser.find_element_by_xpath(
+            ".//*[@id='telemetry']//descendant::strong[@class='hostname' and contains(.,'"+hostname+"')]")
+        result = result1.text
         return result
 
     def take_screenshot(self):
