@@ -17,15 +17,14 @@ class LocatorDict(collections.Mapping):
 
 
 login_page_locators = LocatorDict({
-
     "username_field": (By.ID, 'username'),
     "password_field": (By.ID, 'password'),
     "submit_btn": (By.ID, '_eventId_submit')
 })
 
-insights_page_locators = LocatorDict({
 
-    "system_tab": (By.XPATH, '//aside[@class="dashboard-navigation profile-image-visible"]//li[2]/a'),
-    "filter": (By.XPATH, '//input[@class= "form-control nomar-left input-sm ng-pristine ng-untouched ng-valid"]'),
-    "result": (By.XPATH, '//*[@id="rha-systems-summary-table"]/tbody/tr[1]/td[2]')
+inventory_page_locators = LocatorDict({
+    "inventory_tab": (By.XPATH, '//a[contains(@href,"/insights/inventory")]'),
+    "search_box": (By.XPATH, '//input[contains(@ng-keypress,"event")]'),
+
 })
