@@ -21,10 +21,14 @@ class ClientRegisterTestCase(unittest.TestCase):
         self.vm.register_to_insights()
         self.host_name = self.vm.hostname.rstrip('\n')
         # UI tests for checking registered system appeared on customer portal UI
-        self.login.login_to_portal()
-        self.search = UISearch(self.driver)
-        self.result_text = self.search.register_system(self.host_name)
-        self.assertIn(self.host_name, self.result_text)
+        try:
+            self.login.login_to_portal()
+            self.search = UISearch(self.driver)
+            self.result_text = self.search.register_system(self.host_name)
+            self.assertIn(self.host_name, self.result_text)
+        except Exception as err:
+            self.search.take_screenshot()
+            raise err
 
     def tearDown(self):
         self.vm.unregister_from_rhi()
