@@ -38,4 +38,8 @@ class RegisterationAPITestCase(unittest.TestCase):
         response = check_if_unregistered.json()
         logging.info(response)
         assert response['isCheckingIn'] == False
-
+        assert response['unregistered_at'] is not None
+        reports = self.session.get(self.base_url + '/v1/reports?system_id=' +
+                                          self.system_id)
+        print reports.json()
+        print reports.status_code
