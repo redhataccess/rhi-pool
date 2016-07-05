@@ -23,6 +23,7 @@ class UISearch(SeleniumUtility):
         search_field.send_keys(Keys.RETURN)
         self.browser.implicitly_wait(30)
         # Find hostname in list
+        self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         result1 = self.browser.find_element_by_xpath(
             ".//*[@id='telemetry']//descendant::strong[@class='hostname' and contains(.,'" + hostname + "')]")
         result = result1.text
