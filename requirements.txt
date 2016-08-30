@@ -1,6 +1,6 @@
 python-novaclient
 requests
-paramiko
+paramiko==1.16.0
 selenium
 fauxfactory
 pytest
