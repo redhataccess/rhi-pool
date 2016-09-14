@@ -34,6 +34,14 @@ remote_leaf=<remote leaf id for Satellite 6>
 registered_machine_id=<machine_id for machine registered with Satellite 6>
 hostname=<hostname of the registered machine>
 
+[upload_archive]
+archive_file_path=/path/to/archive_file
+machine_id_path=/path/to/machine_id
+search_file_path=/path/to/bash_file
+un_archive_file_location=/path/to/un_archive_file
+bash_version=<old_bash_version>
+new_bash_version=<new_bash_version>
+
 [env]
 # If you are running your tests against QA or CI env, you need to provide following details
 # for the insights client to upload data to the respective env.
