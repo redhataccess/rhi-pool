@@ -24,6 +24,16 @@ url=<api endpoint base url>
 cert_path=/path/to/cert.pem
 key_path=/path/to/key.pem
 
+[sat62]
+#Required: Satellite 6 setup with a machine registered to it.
+sat6_cert=/path/to/cert.pem
+sat6_key=/path/to/key.pem
+sat6_cacert=/path/to/katello-server-ca.pem
+remote_branch=<remote branch id for Satellite 6>
+remote_leaf=<remote leaf id for Satellite 6>
+registered_machine_id=<machine_id for machine registered with Satellite 6>
+hostname=<hostname of the registered machine>
+
 [env]
 # If you are running your tests against QA or CI env, you need to provide following details
 # for the insights client to upload data to the respective env.

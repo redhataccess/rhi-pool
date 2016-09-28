@@ -14,3 +14,9 @@ class Settings(object):
         cert = self.get('certs', 'cert_path')
         key = self.get('certs', 'key_path')
         return cert, key
+
+    def get_sat6_certs(self):
+        sat6_cert = self.get('sat62', 'sat6_cert')
+        sat6_key = self.get('sat62', 'sat6_key')
+        return sat6_cert, sat6_key
+
