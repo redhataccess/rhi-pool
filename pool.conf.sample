@@ -11,6 +11,7 @@ key_path=/path/to/jenkins_key
 base_url=<base_url>
 rhn_username=<username>
 rhn_password=<password>
+chrome_driver_path=/path/to/chromedriver
 
 [rhn_register]
 rh_username=<username>
