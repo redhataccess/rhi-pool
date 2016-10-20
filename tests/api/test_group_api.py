@@ -16,6 +16,8 @@ class GroupsAPI(unittest.TestCase):
         self.base_url = self.setting.get('api', 'url')
 
     def test_create_delete_groups(self):
+        """ Create and delete group test
+        """ 
         self.display_name = gen_string('alpha', 8)
         #  Create group
         self.create_group = self.session.post(self.base_url + '/v1/groups',

@@ -32,6 +32,8 @@ class SubsetAPITestCase(unittest.TestCase):
     self.base_url = self.setting.get('api', 'url')
 
   def test_subset_api_v1(self):
+    """ Test subset creation using v1 api
+    """
     self.system_ids = []
     print self.vm1
     self.vm1.rhsm_register(distro='rhel7')

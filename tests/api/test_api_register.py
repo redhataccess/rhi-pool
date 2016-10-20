@@ -20,7 +20,7 @@ class RegisterationAPITestCase(unittest.TestCase):
         print 'Hostname: {0}, System_id: {1}'.format(self.hostname,
                                                            self.system_id)
     def test_register_machine(self):
-        # Test if the system is registered
+        """Test if the system is registered"""
         register = self.session.post(self.base_url + '/v1/systems',
                                      data = {'system_id':self.system_id,
                                              'hostname':self.hostname})
@@ -28,8 +28,9 @@ class RegisterationAPITestCase(unittest.TestCase):
         assert register.status_code == 201
 
     def test_unregister_machine(self):
-        # Test if the above registered system has been unregistered and not
-        # checking in.
+        """Test if the above registered system has been unregistered and not 
+        checking in.
+        """
         unregister = self.session.delete(self.base_url + '/v1/systems/' +
                                          self.system_id)
         assert unregister.status_code == 204
