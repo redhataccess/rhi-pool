@@ -4,15 +4,15 @@ import unittest
 import requests
 from fauxfactory import gen_string
 from insights.config import Settings
+from insights.session import Session
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 
 class GroupsAPI(unittest.TestCase):
     def setup_class(self):
         self.setting = Settings()
-        self.session = requests.session()
-        self.session.cert = self.setting.get_certs()
-        self.session.verify = False
+        self.session_instance = Session() 
+        self.session = self.session_instance.get_session()
         self.base_url = self.setting.get('api', 'url')
 
     def test_create_delete_groups(self):
