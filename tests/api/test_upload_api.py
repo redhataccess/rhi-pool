@@ -17,8 +17,6 @@ class UploadAPI(unittest.TestCase):
         self.session.cert = self.setting.get_certs()
         self.session.verify = False
         self.base_url = self.setting.get('api', 'url')
-        self.search_file_path = self.setting.get('upload_archive', 'search_file_path')
-        self.bash_version = self.setting.get('upload_archive', 'bash_version')
         self.new_bash_version = self.setting.get('upload_archive', 'new_bash_version')
         self.un_archive_file_location = self.setting.get('upload_archive', 'un_archive_file_location')
         self.archive_location = self.setting.get('upload_archive', 'archive_file_path')
@@ -27,6 +25,7 @@ class UploadAPI(unittest.TestCase):
         """ Testing api upload endpoint """
         self.system_id = archive_functions.get_system_id(self.archive_location)
         files = {'file': open(self.archive_location, "rb")}
+        print self.system_id
         self.upload = self.session.post(self.base_url + '/v1/uploads/' + self.system_id,
                                         files=files)
         assert self.upload.status_code == 201
@@ -35,8 +34,9 @@ class UploadAPI(unittest.TestCase):
     def test_upload_new_archive(self):
         """ Uploading new modified archive and checking if rule is detected """
         self.system_id = archive_functions.get_system_id(self.archive_location)
-        archive_functions.replace_bash_version(self.search_file_path,self.un_archive_file_location,self.bash_version,
-                                               self.new_bash_version)
+
+        archive_functions.replace_bash_version(self.un_archive_file_location,
+                                               self.new_bash_version, self.archive_location)
         new_archive_file = {'file': open('tarfile_add.tar.gz', "rb")}
         upload_archive = self.session.post(self.base_url + '/v1/uploads/' + self.system_id,
                                            files=new_archive_file)
