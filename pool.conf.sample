@@ -36,7 +36,6 @@ hostname=<hostname of the registered machine>
 
 [upload_archive]
 archive_file_path=/path/to/archive_file
-machine_id_path=/path/to/machine_id
 search_file_path=/path/to/bash_file
 un_archive_file_location=/path/to/un_archive_file
 bash_version=<old_bash_version>
