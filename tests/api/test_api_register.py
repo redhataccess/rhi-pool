@@ -3,13 +3,15 @@ import json, requests
 from insights.config import Settings
 from fauxfactory import gen_string
 import logging
+from insights.configs import log_settings
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+LOGGER = logging.getLogger('insights')
 
 class RegisterationAPITestCase(unittest.TestCase):
 
     @classmethod
     def setup_class(self):
+	log_settings.configure()
         self.setting = Settings()
         self.session = requests.session()
         self.session.cert = self.setting.get_certs()
@@ -24,7 +26,7 @@ class RegisterationAPITestCase(unittest.TestCase):
         register = self.session.post(self.base_url + '/v1/systems',
                                      data = {'system_id':self.system_id,
                                              'hostname':self.hostname})
-        logging.info(register.json())
+        LOGGER.info(register.json())
         assert register.status_code == 201
 
     def test_unregister_machine(self):
@@ -37,7 +39,7 @@ class RegisterationAPITestCase(unittest.TestCase):
         check_if_unregistered = self.session.get(self.base_url + '/v1/systems/' +
                                           self.system_id)
         response = check_if_unregistered.json()
-        logging.info(response)
+        LOGGER.info(response)
         assert response['isCheckingIn'] == False
         assert response['unregistered_at'] is not None
         reports = self.session.get(self.base_url + '/v1/reports?system_id=' +
