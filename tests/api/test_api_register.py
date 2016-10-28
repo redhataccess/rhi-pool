@@ -3,7 +3,7 @@ import json, requests
 from insights.config import Settings
 from fauxfactory import gen_string
 import logging
-
+from insights.session import Session
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 class RegisterationAPITestCase(unittest.TestCase):
@@ -11,9 +11,8 @@ class RegisterationAPITestCase(unittest.TestCase):
     @classmethod
     def setup_class(self):
         self.setting = Settings()
-        self.session = requests.session()
-        self.session.cert = self.setting.get_certs()
-        self.session.verify = False
+        session_instance = Session()
+        self.session = session_instance.get_session()
         self.base_url = self.setting.get('api', 'url')
         self.system_id  = gen_string('alphanumeric', 10)
         self.hostname = 'hostname_{0}'.format(gen_string('alpha', 12))
