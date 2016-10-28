@@ -11,8 +11,8 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 class GroupsAPI(unittest.TestCase):
     def setup_class(self):
         self.setting = Settings()
-        ses_instance = Session()
-        self.session = ses_instance.get_session()
+        session_instance = Session()
+        self.session = session_instance.get_session()
         self.base_url = self.setting.get('api', 'url')
 
     def test_create_delete_groups(self):

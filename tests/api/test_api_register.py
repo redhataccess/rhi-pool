@@ -11,8 +11,8 @@ class RegisterationAPITestCase(unittest.TestCase):
     @classmethod
     def setup_class(self):
         self.setting = Settings()
-        ses_instance = Session()
-        self.session = ses_instance.get_session()
+        session_instance = Session()
+        self.session = session_instance.get_session()
         self.base_url = self.setting.get('api', 'url')
         self.system_id  = gen_string('alphanumeric', 10)
         self.hostname = 'hostname_{0}'.format(gen_string('alpha', 12))

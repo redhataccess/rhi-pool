@@ -24,8 +24,8 @@ class SubsetAPITestCase(unittest.TestCase):
                                  flavor_name='Tiny', key_name='jenkins-key',
                                  pool_name='public')
     self.setting = Settings()
-    ses_instance = Session()
-    self.session = ses_instance.get_session()
+    session_instance = Session()
+    self.session = session_instance.get_session()
     self.base_url = self.setting.get('api', 'url')
 
   def test_subset_api_v1(self):
