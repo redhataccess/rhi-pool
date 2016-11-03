@@ -3,15 +3,15 @@ import logging
 import unittest
 import requests
 from insights.config import Settings
+from insights.session import Session
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 
 class UserInfoAPI(unittest.TestCase):
     def setup_class(self):
         self.setting = Settings()
-        self.session = requests.session()
-        self.session.cert = self.setting.get_certs()
-        self.session.verify = False
+        session_instance = Session()
+        self.session = session_instance.get_session()
         self.base_url = self.setting.get('api', 'url')
 
     def test_current_user_info(self):
