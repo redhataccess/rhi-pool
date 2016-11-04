@@ -3,18 +3,24 @@ import unittest
 import requests
 from insights import archive_functions
 from insights.config import Settings
+from insights.session import Session
+from insights.configs import log_settings
+from insights.utils.util import Util
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+LOGGER = logging.getLogger('insights_api')
 
 
 class UploadAPI(unittest.TestCase):
     def setUp(self):
         self.setting = Settings()
-        self.session = requests.session()
-        self.session.cert = self.setting.get_certs()
-        self.session.verify = False
+        log_settings.configure()
+        session_instance = Session()
+        self.session = session_instance.get_session()
         self.base_url = self.setting.get('api', 'url')
         self.archive_location = self.setting.get('upload_archive', 'archive_file_path')
+
+    def setup_method(self, method):
+        Util.print_testname(type(self).__name__, method)
 
     def test_archive_upload(self):
         """ Testing api upload endpoint """
@@ -23,4 +29,4 @@ class UploadAPI(unittest.TestCase):
         self.upload = self.session.post(self.base_url + '/v1/uploads/' + self.system_id,
                                         files=files)
         assert self.upload.status_code == 201
-        logging.info("Upload done successfully")
+        LOGGER.info("Upload done successfully")

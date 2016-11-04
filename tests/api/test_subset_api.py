@@ -1,11 +1,15 @@
 from fauxfactory import gen_string
 import unittest
+import logging
 from insights.vm_provisioning import VirtualMachine,VMError
 from insights.subset_functions import *
-import json
-import requests
 from insights.config import Settings
 from insights.session import Session
+from insights.configs import log_settings
+from insights.utils.util import Util
+
+LOGGER = logging.getLogger('insights_api')
+
 
 class SubsetAPITestCase(unittest.TestCase):
 
@@ -24,88 +28,92 @@ class SubsetAPITestCase(unittest.TestCase):
                                  flavor_name='Tiny', key_name='jenkins-key',
                                  pool_name='public')
     self.setting = Settings()
+    log_settings.configure()
     session_instance = Session()
     self.session = session_instance.get_session()
     self.base_url = self.setting.get('api', 'url')
+
+  def setup_method(self, method):
+      Util.print_testname(type(self).__name__, method)
 
   def test_subset_api_v1(self):
     """ Test subset creation using v1 api
     """
     self.system_ids = []
-    print self.vm1
+    LOGGER.info(self.vm1)
     self.vm1.rhsm_register(distro='rhel7')
     self.vm1.register_to_insights()
-    print self.vm1.hostname
-    print self.vm1.machine_id
+    LOGGER.info(self.vm1.hostname)
+    LOGGER.info(self.vm1.machine_id)
 
     self.system_ids.append(self.vm1.machine_id)
 
     self.vm2.rhsm_register(distro='rhel7')
     self.vm2.register_to_insights()
-    print self.vm2
-    print self.vm2.hostname
-    print self.vm2.machine_id
+    LOGGER.info(self.vm2)
+    LOGGER.info(self.vm2.hostname)
+    LOGGER.info(self.vm2.machine_id)
     self.system_ids.append(self.vm2.machine_id)
-    print self.system_ids
+    LOGGER.info(self.system_ids)
 
     #create branch id
     self.branch_id = 'branch_{0}'.format(gen_string('alpha',12))
     self.payload = create_subset_payload(self.branch_id, self.system_ids)
-    print self.payload
+    LOGGER.info(self.payload)
     # creating subsets at /v1/subsets
     subset_create = self.session.post(self.base_url + '/v1/subsets',
                                       json = self.payload)
-    print subset_create.ok
+    LOGGER.info(subset_create.ok)
     if subset_create.ok == True:
-        print "Subset created successfully"
+        LOGGER.info("Subset created successfully")
     else:
-        print subset_create.status_code, subset_create.text
+        LOGGER.info(subset_create.status_code, subset_create.text)
 
     response = subset_create.json()
-    print response
+    LOGGER.info(response)
     assert response["hash"] is not None
     assert response["length"] == len(self.system_ids)
 
     #Creating get request for the system_ids from a subset hash
-    print "get request"
+    LOGGER.info("get request")
     get_subset = self.session.get(self.base_url + '/subsets/' + response["hash"] + '/systems')
-    print get_subset.ok
-    print get_subset.text
+    LOGGER.info(get_subset.ok)
+    LOGGER.info(get_subset.text)
 
     response = get_subset.json()
     for system in response:
-        print system
-        print system["system_id"]
+        LOGGER.info(system)
+        LOGGER.info(system["system_id"])
         self.assertIn(system["system_id"], self.system_ids)
-    print "assertion for /v1/subsets done, checking for /subsets... "
+    LOGGER.info("assertion for /v1/subsets done, checking for /subsets... ")
 
     # check subset creation without /v1
     self.branch_id = 'branch_{0}'.format(gen_string('alpha',12))
     self.payload = create_subset_payload(self.branch_id, self.system_ids)
-    print self.payload
+    LOGGER.info(self.payload)
     subset_create = self.session.post(self.base_url + '/subsets',
                                       json = self.payload)
-    print subset_create.ok
+    LOGGER.info(subset_create.ok)
     if subset_create.ok == True:
-        print "Subset created successfully for /subsets"
+        LOGGER.info("Subset created successfully for /subsets")
     else:
-        print subset_create.status_code, subset_create.text
+        LOGGER.info(subset_create.status_code, subset_create.text)
 
     response = subset_create.json()
-    print response
+    LOGGER.info(response)
     assert response["hash"] is not None
     assert response["length"] == len(self.system_ids)
 
     #Creating get request for the system_ids from a subset hash
-    print "get request"
+    LOGGER.info("get request")
     get_subset = self.session.get(self.base_url + '/subsets/' + response["hash"] + '/systems')
-    print get_subset.ok
-    print get_subset.text
+    LOGGER.info(get_subset.ok)
+    LOGGER.info(get_subset.text)
 
     response = get_subset.json()
     for system in response:
-        print system
-        print system["system_id"]
+        LOGGER.info(system)
+        LOGGER.info(system["system_id"])
         self.assertIn(system["system_id"], self.system_ids)
 
   @classmethod
