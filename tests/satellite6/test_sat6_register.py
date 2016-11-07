@@ -1,26 +1,33 @@
 import unittest
-import json, requests
+import logging
 from insights.config import Settings
 from fauxfactory import gen_string
-import logging
+from insights.session import Session
+from insights.configs import log_settings
+from insights.utils.util import Util
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+LOGGER = logging.getLogger('insights_sat6')
 
 class Satellite6APITestCase(unittest.TestCase):
 
     @classmethod
     def setup_class(self):
         self.setting = Settings()
-        self.session = requests.session()
-        self.session.cert = self.setting.get_sat6_certs()
-        self.session.verify = self.setting.get('sat62','sat6_cacert')
+        log_settings.configure()
+        session_instance = Session()
+        self.session = session_instance.get_session(certs="sat62",
+                                                    verify=self.setting.get('sat62','sat6_cacert'))
         self.base_url = self.setting.get('api', 'url')
         self.remote_branch = self.setting.get('sat62','remote_branch')
         self.remote_leaf = self.setting.get('sat62', 'remote_leaf')
         self.system_id = self.setting.get('sat62', 'registered_machine_id')
         self.hostname = self.setting.get('sat62','hostname')
-        print 'Hostname: {0}, System_id: {1}'.format(self.hostname,
-                                                           self.system_id)
+        LOGGER.info(self.hostname)
+        LOGGER.info(self.system_id)
+
+    def setup_method(self, method):
+        Util.print_testname(type(self).__name__, method)
+
     def test_register_machine_sat6(self):
         """ Test if the system is registered with Satellite 6"""
         register = self.session.post(self.base_url + '/v2/systems',
@@ -29,8 +36,8 @@ class Satellite6APITestCase(unittest.TestCase):
                                              'remote_branch':self.remote_branch,
                                              'remote_leaf':self.remote_leaf,
                                              })
-        print register.status_code
-        logging.info(register.json())
+        LOGGER.info(register.status_code)
+        LOGGER.info(register.json())
         assert register.status_code == 200
 
     def test_unregister_machine_sat6(self):
@@ -41,13 +48,13 @@ class Satellite6APITestCase(unittest.TestCase):
                                          self.system_id)
         assert unregister.status_code == 204
         check_if_unregistered = self.session.get(self.base_url + '/v1/systems/' +
-                                          self.system_id)
+                                                 self.system_id)
         response = check_if_unregistered.json()
-        logging.info(response)
+        LOGGER.info(response)
         assert response['isCheckingIn'] == False
         assert response['unregistered_at'] is not None
         reports = self.session.get(self.base_url + '/v1/reports?system_id=' +
-                                          self.system_id)
-        logging.info(reports.json())
-        logging.info(reports.status_code)
+                                   self.system_id)
+        LOGGER.info(reports.json())
+        LOGGER.info(reports.status_code)
 
