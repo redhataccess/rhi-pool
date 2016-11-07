@@ -35,10 +35,7 @@ registered_machine_id=<machine_id for machine registered with Satellite 6>
 hostname=<hostname of the registered machine>
 
 [upload_archive]
-new_bash_version=<new_bash_version>
 archive_file_path=/path/to/archive_file
-un_archive_file_location=/path/to/un_archive_file
-
 
 [env]
 # If you are running your tests against QA or CI env, you need to provide following details
