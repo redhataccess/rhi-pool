@@ -17,38 +17,55 @@ def singleton(cls):
     return get_instance
 
 
+class NoCertificateException(Exception):
+    """
+    No certificate exception
+    Valid values are :
+        certs
+        sat6
+    """
+
+
 @singleton
 class Session:
     """
     Requests session object
     """
-    def __init__(self, verify=False):
+    def __init__(self):
         self.session = None
-        self.verify = verify
-        self._create_session()
+        self.settings = Settings()
 
-    def get_session(self):
+    def get_session(self, certs="certs", verify=None):
         """
         Returns requests sesssion object
         Returns if already created or creates new one
         :return:
         """
         if self.session is None:
-            return self._create_session()
+            return self._create_session(certs, verify)
         else:
             return self.session
 
     def _get_certs(self):
         """Get certificate details for session creation"""
-        self.settings = Settings()
         return self.settings.get_certs()
 
-    def _create_session(self):
+    def _get_sat6_certs(self):
+        """Get certificate details for session creation"""
+        return self.settings.get_sat6_certs()
+
+    def _create_session(self, certs, verify):
         """
         Function to set all values required for session
         :return:
         """
         self.session = requests.session()
-        self.session.verify = self.verify
-        self.session.cert = self._get_certs()
+        if certs == "certs":
+            self.session.verify = verify
+            self.session.cert = self._get_certs()
+        elif certs == "sat6":
+            self.session.cert = self._get_sat6_certs()
+            self.session.verify = verify
+        else:
+            raise NoCertificateException
         return self.session
