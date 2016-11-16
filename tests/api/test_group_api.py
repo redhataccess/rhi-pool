@@ -2,21 +2,20 @@ import json
 import logging
 import unittest
 from fauxfactory import gen_string
-from insights.config import Settings
 from insights.session import Session
-from insights.configs import log_settings
+from insights.configs import settings
 from insights.utils.util import Util
+from insights.utils.api_resources import group_api
+
 
 LOGGER = logging.getLogger('insights_api')
 
 
 class GroupsAPI(unittest.TestCase):
     def setup_class(self):
-        self.setting = Settings()
-        log_settings.configure()
         session_instance = Session()
         self.session = session_instance.get_session()
-        self.base_url = self.setting.get('api', 'url')
+        self.base_url = settings.api.url
 
     def setup_method(self, method):
         Util.print_testname(type(self).__name__, method)
@@ -26,7 +25,7 @@ class GroupsAPI(unittest.TestCase):
         """
         self.display_name = gen_string('alpha', 8)
         #  Create group
-        self.create_group = self.session.post(self.base_url + '/v1/groups',
+        self.create_group = self.session.post(self.base_url + group_api,
                                               data={'display_name': self.display_name})
         assert self.create_group.status_code == 201
         self.result = self.create_group.text
@@ -36,14 +35,14 @@ class GroupsAPI(unittest.TestCase):
         LOGGER.info("Group created successfully")
 
         # Request groups
-        self.request_groups = self.session.get(self.base_url + '/v1/groups/')
+        self.request_groups = self.session.get(self.base_url + group_api)
         assert self.request_groups.status_code == 200
         request_groups = self.request_groups.json()
         LOGGER.info(request_groups)
 
         # Request group
         self.group_id = response['id']
-        self.request_group = self.session.get(self.base_url + '/v1/groups/' + str(self.group_id))
+        self.request_group = self.session.get(self.base_url + group_api + '/' + str(self.group_id))
         group_name = self.request_group.json()
         LOGGER.info(group_name)
         assert self.request_group.status_code == 200
@@ -54,8 +53,8 @@ class GroupsAPI(unittest.TestCase):
 
 
         # Delete group
-        self.delete_group = self.session.delete(self.base_url + '/v1/groups/' + str(self.group_id))
+        self.delete_group = self.session.delete(self.base_url + group_api + '/' + str(self.group_id))
         assert self.delete_group.status_code == 204
-        after_deleting_group = self.session.get(self.base_url + '/v1/groups/' + str(self.group_id))
+        after_deleting_group = self.session.get(self.base_url + group_api + '/' + str(self.group_id))
         assert after_deleting_group.status_code == 404
         LOGGER.info("Group deleted successfully")

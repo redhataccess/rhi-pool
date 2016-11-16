@@ -5,10 +5,12 @@ import novaclient
 import time
 from novaclient import client
 import paramiko
+import logging
 import sys
 import subprocess
-from insights.config import Settings
+from insights.configs import settings
 from insights.ssh import SSHConnection
+
 
 class VMError(Exception):
     """
@@ -17,16 +19,15 @@ class VMError(Exception):
     """
 
 
-class VirtualMachine(Settings):
+class VirtualMachine:
 
     def __init__(self):
-        super(VirtualMachine, self).__init__()
-        self.rhn_username = self.get('rhn_register', 'rh_username')
-        self.rhn_password = self.get('rhn_register', 'rh_password')
-        self.rhel6_repo = self.get('repo', 'rhel6_repo')
-        self.rhel7_repo = self.get('repo', 'rhel7_repo')
-        self.insights_repo_el6 = self.get('repo', 'insights_repo_el6')
-        self.insights_repo_el7 = self.get('repo', 'insights_repo_el7')
+        self.rhn_username = settings.rhn_register.rh_username
+        self.rhn_password = settings.rhn_register.rh_password
+        self.rhel6_repo = settings.repo.rhel6_repo
+        self.rhel7_repo = settings.repo.rhel7_repo
+        self.insights_repo_el6 = settings.repo.insights_repo_el6
+        self.insights_repo_el7 = settings.repo.insights_repo_el7
 
     def get_openstack_client_instance(self):
         """
@@ -34,10 +35,10 @@ class VirtualMachine(Settings):
         :return: openstack client object
 
         """
-        username = self.get('openstack_vms','username')
-        api_key = self.get('openstack_vms', 'api_key')
-        auth_url = self.get('openstack_vms', 'auth_url')
-        project_id = self.get('openstack_vms', 'project_id')
+        username = settings.openstack_vm.username
+        api_key = settings.openstack_vm.api_key
+        auth_url = settings.openstack_vm.auth_url
+        project_id = settings.openstack_vm.project_id
         with client.Client(
             version=2, username=username,
             api_key=api_key, auth_url=auth_url, project_id=project_id
