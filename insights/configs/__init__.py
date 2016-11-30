@@ -1,2 +1,5 @@
 from insights.configs.base import Settings
-log_settings = Settings()
+settings = Settings()
+
+if not settings.configured:
+    settings.configure()

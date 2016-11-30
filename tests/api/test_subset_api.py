@@ -3,10 +3,10 @@ import unittest
 import logging
 from insights.vm_provisioning import VirtualMachine,VMError
 from insights.subset_functions import *
-from insights.config import Settings
 from insights.session import Session
-from insights.configs import log_settings
+from insights.configs import settings
 from insights.utils.util import Util
+from insights.utils.api_resources import subset_api
 
 LOGGER = logging.getLogger('insights_api')
 
@@ -27,11 +27,9 @@ class SubsetAPITestCase(unittest.TestCase):
                                  image_name='RHEL-7.2-x86_64',
                                  flavor_name='Tiny', key_name='jenkins-key',
                                  pool_name='public')
-    self.setting = Settings()
-    log_settings.configure()
     session_instance = Session()
     self.session = session_instance.get_session()
-    self.base_url = self.setting.get('api', 'url')
+    self.base_url = settings.api.url
 
   def setup_method(self, method):
       Util.print_testname(type(self).__name__, method)
@@ -61,14 +59,16 @@ class SubsetAPITestCase(unittest.TestCase):
     self.payload = create_subset_payload(self.branch_id, self.system_ids)
     LOGGER.info(self.payload)
     # creating subsets at /v1/subsets
-    subset_create = self.session.post(self.base_url + '/v1/subsets',
-                                      json = self.payload)
+    subset_create = self.session.post(self.base_url + subset_api,
+                                      json=self.payload)
     LOGGER.info(subset_create.ok)
     if subset_create.ok == True:
         LOGGER.info("Subset created successfully")
     else:
-        LOGGER.info(subset_create.status_code, subset_create.text)
+        LOGGER.info(subset_create.status_code)
+        LOGGER.info(subset_create.text)
 
+    LOGGER.info(subset_create.content)
     response = subset_create.json()
     LOGGER.info(response)
     assert response["hash"] is not None
@@ -97,7 +97,8 @@ class SubsetAPITestCase(unittest.TestCase):
     if subset_create.ok == True:
         LOGGER.info("Subset created successfully for /subsets")
     else:
-        LOGGER.info(subset_create.status_code, subset_create.text)
+        LOGGER.info(subset_create.status_code)
+        LOGGER.info(subset_create.text)
 
     response = subset_create.json()
     LOGGER.info(response)
