@@ -408,6 +408,9 @@ class Settings(object):
         self._configured = False
         self.reader = None
         self._validation_error = []
+        self.webdriver = None
+        self.webdriver_binary = None
+        self.webdriver_desired_capabilities = None
 
         self._configure_logging()
         self.api_resources = APIResourcesReader()
@@ -432,6 +435,7 @@ class Settings(object):
                 'Not able to find settings file at {}'.format(settings_path))
 
         self.reader = PropertyReader(settings_path)
+        self._read_insights_settings()
 
         if self.reader.has_section('rhn_login'):
             self.rhn_login.read(self.reader)
@@ -470,6 +474,17 @@ class Settings(object):
                 '{}'.format('\n'.join(self._validation_error))
             )
         self._configured = True
+
+    def _read_insights_settings(self):
+        self.browser = self.reader.get(
+            'insights', 'browser', 'selenium'
+        )
+        self.webdriver = self.reader.get(
+            'insights', 'webdriver', 'chrome'
+        )
+        self.webdriver_binary = self.reader.get(
+            'insights', 'webdriver_binary', None
+        )
 
     def _configure_logging(self):
         """Configure logging for Insights.

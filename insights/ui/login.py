@@ -1,27 +1,27 @@
-from locators import login_page_locators
-from selenium_utility import SeleniumUtility
-from insights.config import Settings
+# -*- encoding: utf-8 -*-
+from insights.ui.base import Base, UINoSuchElementError
+from insights.ui.locators import locators, common_locators
+from insights.ui.navigator import Navigator
+import time
 
 
-class LoginUI(SeleniumUtility, Settings):
-    def __init__(self, browser):
-        super(LoginUI, self).__init__(browser)
-        self.base_url = self.get('rhn_login', 'base_url')
-        self.username = self.get('rhn_login', 'rhn_username')
-        self.password = self.get('rhn_login', 'rhn_password')
+class Login(Base):
+    """Implements login, logout functions for Foreman UI"""
 
-    def login_to_portal(self):
-        username_field = self.find_element(login_page_locators['username_field'])
-        username_field.clear()
-        username_field.send_keys(self.username)
-        password_field = self.find_element(login_page_locators['password_field'])
-        password_field.clear()
-        password_field.send_keys(self.password)
-        submit_btn = self.find_element(login_page_locators['submit_btn'])
-        submit_btn.click()
-        self.go_to_insights_url()
+    def login(self, username, password, organization=None, location=None):
+        """Logins user from UI"""
+        if self.wait_until_element(locators['login.username']):
+            self.field_update('login.username', username)
+            self.field_update('login.password', password)
+            self.click(locators['login.submit'])
+            self.wait_until_element(common_locators['username'], timeout=50)
 
-    def go_to_insights_url(self):
-        current_url = self.browser.current_url
-        self.browser.get(current_url + 'insights/actions')
-        self.browser.implicitly_wait(30)
+            #Go to Insights home page
+            self.go_to_insights_url()
+
+            #Adding explicit wait as so many redirection happens after login
+            time.sleep(5)
+
+    def logout(self):
+        """ Log out from Insights UI"""
+        Navigator(self.browser).go_to_logout()

@@ -1,39 +1,42 @@
-import unittest
-from fauxfactory import gen_string
-from insights.configs import settings
-from insights.ui.login import LoginUI
-from insights.ui.search import UISearch
+import logging
 from insights.vm_provisioning import VirtualMachine
-from selenium import webdriver
+from fauxfactory import gen_string
+from insights.test import UITestCase
+from insights.ui.session import Session
+from insights.ui.navigator import Navigator
+
+LOGGER = logging.getLogger('insights_portal')
 
 
-class ClientRegisterTestCase(unittest.TestCase):
+class ClientRegisterTestCase(UITestCase):
+
     def setUp(self):
-        self.chrome_driver = settings.rhn_login.chrome_driver_path
+        super(ClientRegisterTestCase, self).setUp()
         self.vm = VirtualMachine()
         self.vm_name = 'vm_{0}'.format(gen_string('alpha', 6))
+        LOGGER.info("Creating openstack instance - RHEL-7.1-x86_64")
         self.vm.create_openstack_instance(instance_name=self.vm_name, image_name='RHEL-7.1-x86_64',
                                           flavor_name='Tiny', key_name='jenkins-key', pool_name='public')
-        self.driver = webdriver.Chrome(self.chrome_driver)
-        self.login = LoginUI(self.driver)
-        self.driver.get(self.login.base_url)
 
     def test_rhi_register(self):
+        """
+        Test for RHEL machine registration to Insights and verifying it
+        on portal
+        """
         self.vm.rhsm_register(distro='rhel7')
         self.vm.register_to_insights()
         self.host_name = self.vm.hostname.rstrip('\n')
-        # UI tests for checking registered system appeared on customer portal UI
-        try:
-            self.login.login_to_portal()
-            self.search = UISearch(self.driver)
-            self.result_text = self.search.register_system(self.host_name)
-            self.assertIn(self.host_name, self.result_text)
-        except Exception as err:
-            self.search.take_screenshot()
-            raise err
+        with Session(self.browser):
+            Navigator(self.browser).go_to_inventory()
+            self.inventory.search_inventory(self.host_name)
+            self.inventory.wait_for_inventory_hostname(self.host_name)
+            host, sys_type = self.inventory.get_inventory_details()
+            self.assertEqual(self.host_name, str(host).strip(' '))
+            self.assertEqual("RHEL Server", str(sys_type).strip(' '))
 
     def tearDown(self):
+        LOGGER.info("Unregistering VM from RHI")
         self.vm.unregister_from_rhi()
+        LOGGER.info("Unregistering VM from RHSM")
         self.vm.unregister_from_RHSM()
         self.vm.delete_openstack_instance(self.vm_name)
-        self.login.teardown()
