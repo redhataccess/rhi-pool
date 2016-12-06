@@ -23,18 +23,20 @@ class UserInfoAPI(unittest.TestCase):
         """
         self.user_info = self.session.get(self.base_url + me)
         LOGGER.info(self.user_info.json())
-        assert self.user_info.status_code == 200
+        Util.log_assert(self.user_info.status_code == 200,
+                        "Response is not 200 OK")
         self.text = self.user_info.text
         response = json.loads(self.text)
         account_number = response['account_number']
-        assert account_number == str(477931)
+        Util.log_assert(account_number == str(477931), "Account number is incorrect")
 
     def test_product_used_by_account(self):
         """ Test products used by this current user
         """
         self.product = self.session.get(self.base_url + account_products)
         LOGGER.info(self.product.json())
-        assert self.product.status_code == 200
+        Util.log_assert(self.product.status_code == 200,
+                        "Response is not 200 OK")
         product_info = json.loads(self.product.text)
         product_used = product_info[0]
-        assert product_used == 'rhel'
+        Util.log_assert(product_used == 'rhel', "Product used is not RHEL")
