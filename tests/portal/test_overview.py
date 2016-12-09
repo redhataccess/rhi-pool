@@ -41,5 +41,22 @@ class OverviewTabTestCase(UITestCase):
                              str(self.overview.overview_plan_summary()).rstrip(' '))
             self.assertTrue(self.overview.is_create_plan_displayed())
 
+    def test_positive_navigation_from_overview(self):
+        with Session(self.browser):
+            #Check view actions
+            Navigator(self.browser).go_to_overview()
+            self.overview.go_to_overview_view_actions()
+            self.assertEqual('Actions', self.actions.actions_title())
 
+            #Check view Inventory
+            Navigator(self.browser).go_to_overview()
+            self.assertEqual('Overview',
+                             self.overview.overview_title())
+            self.overview.go_to_overview_view_inventory()
 
+            #Check view Planner
+            Navigator(self.browser).go_to_overview()
+            self.overview.go_to_overview_planner()
+
+            #Go to top of the page
+            self.browser.execute_script('scroll(0, 0);')

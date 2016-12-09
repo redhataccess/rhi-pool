@@ -37,7 +37,6 @@ class Base(object):
         """Wrapper around Selenium's WebDriver that allows you to search for an
         element in the web page.
         """
-
         try:
             _webelement = self.browser.find_element(*locator)
             if _webelement.is_displayed():
@@ -66,7 +65,7 @@ class Base(object):
         """
 
         try:
-            _webelements = self.browser.find_element(*locator)
+            _webelements = self.browser.find_elements(*locator)
             webelements = []
 
             for _webelement in _webelements:
@@ -149,6 +148,15 @@ class Base(object):
         self.browser.execute_script(
             'arguments[0].scrollIntoView(false);',
             element,
+        )
+
+    def scroll_to_top(self):
+        """
+        Scroll to top of the page
+        :return:
+        """
+        self.browser.execute_script(
+            'scroll(0, 0);'
         )
 
     def click(self, target, wait_for_ajax=True,

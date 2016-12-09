@@ -5,6 +5,7 @@ from insights.ui.browser import browser
 from insights.ui.login import Login
 from insights.ui.overview import Overview
 from insights.ui.inventory import Inventory
+from insights.ui.actions import Actions
 
 LOGGER = logging.getLogger(__name__)
 
@@ -53,5 +54,6 @@ class UITestCase(TestCase):
         self.login = Login(self.browser)
         self.overview = Overview(self.browser)
         self.inventory = Inventory(self.browser)
+        self.actions = Actions(self.browser)
 
 

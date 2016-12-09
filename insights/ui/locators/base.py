@@ -29,13 +29,13 @@ locators = LocatorDict({
     ),
     "overview.latest.news": (
       By.XPATH,
-      ("//span[@class='handcrafted-content']")
+      ("//span[@class='handcrafted-content']/p")
     ),
 
     #Elements under Actions summary on Overview
     "overview.actions.availability": (
         By.XPATH,
-        ("//div[contains(@class, 'availability-color')]/div[@class='text']")
+        ("//div[contains(@class, 'availability-color')]/div[@class='text']/div[@class='msg']")
     ),
     "overview.availability.num": (
         By.XPATH,
@@ -43,7 +43,7 @@ locators = LocatorDict({
     ),
     "overview.actions.stability": (
         By.XPATH,
-        ("//div[contains(@class, 'stability-color')]/div[@class='text']")
+        ("//div[contains(@class, 'stability-color')]/div[@class='text']/div[@class='msg']")
     ),
     "overview.stability.num": (
         By.XPATH,
@@ -51,7 +51,7 @@ locators = LocatorDict({
     ),
     "overview.actions.performance": (
         By.XPATH,
-        ("//div[contains(@class, 'performance-color')]/div[@class='text']")
+        ("//div[contains(@class, 'performance-color')]/div[@class='text']/div[@class='msg']")
     ),
     "overview.performance.num": (
         By.XPATH,
@@ -59,7 +59,7 @@ locators = LocatorDict({
     ),
     "overview.actions.security": (
         By.XPATH,
-        ("//div[contains(@class, 'security-color')]/div[@class='text']")
+        ("//div[contains(@class, 'security-color')]/div[@class='text']/div[@class='msg']")
     ),
     "overview.security.num": (
         By.XPATH,
@@ -77,6 +77,9 @@ locators = LocatorDict({
     "overview.newest.allsystems": (
         By.XPATH, ("//div[@class='content']/ul")
     ),
+    "overview.viewinventory": (By.LINK_TEXT, ("View inventory")),
+
+    #Elements under Plan summary
     "overview.plan.summary": (
         By.XPATH,
         ("//a[@ui-sref='app.maintenance']/preceding-sibling::span[2]")
@@ -84,6 +87,7 @@ locators = LocatorDict({
     "overview.plan.createplan": (
         By.LINK_TEXT, ('CREATE A NEW PLAN')
     ),
+    "overview.viewplanner": (By.LINK_TEXT, ("View planner")),
 
     #Elements on Inventory page
     "inventory.search.box": (
@@ -97,5 +101,10 @@ locators = LocatorDict({
     ),
     "inventory.system.type": (
         By.CSS_SELECTOR, ("strong[ng-if='includeText']")
+    ),
+
+    #Actions Insights page elements
+    "actions.title": (
+        By.XPATH, ("//h1[contains(@class, 'page-title')]/span")
     )
 })
