@@ -6,3 +6,4 @@ from .base import locators
 from .model import Locator, LocatorDict
 from .menu import menu_locators
 from .common import common_locators
+from .actions import action_locators

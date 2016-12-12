@@ -17,6 +17,7 @@ class Navigator(Base):
 
     def go_to_overview(self):
         self.find_element(menu_locators['menu.overview']).click()
+        self.wait_until_element(locators['overview.latest'])
 
     def go_to_inventory(self):
         self.find_element(menu_locators['menu.inventory']).click()

@@ -5,6 +5,7 @@ import sys
 import os
 import configparser
 import six
+import shutil
 from logging import config
 from insights.configs import casts
 
@@ -436,6 +437,7 @@ class Settings(object):
 
         self.reader = PropertyReader(settings_path)
         self._read_insights_settings()
+        self._cleanup_downloads()
 
         if self.reader.has_section('rhn_login'):
             self.rhn_login.read(self.reader)
@@ -474,6 +476,17 @@ class Settings(object):
                 '{}'.format('\n'.join(self._validation_error))
             )
         self._configured = True
+
+    def _cleanup_downloads(self):
+        """
+        Remove all files from ./downloads
+        :return:
+        """
+        LOGGER.info("Cleaning up downloads")
+        try:
+            shutil.rmtree(os.path.join(get_project_root(), 'downloads'))
+        except:
+            LOGGER.info("downloads directory not present")
 
     def _read_insights_settings(self):
         self.browser = self.reader.get(

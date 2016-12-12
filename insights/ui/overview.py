@@ -24,6 +24,7 @@ class Overview(Base):
         return self.find_element(locators['overview.latest.news']).text
 
     def overview_action_availability(self):
+        self.wait_until_element(locators['overview.actions.availability'], timeout=50)
         return self.find_element(locators['overview.actions.availability']).text
 
     def overview_action_avl_count(self):
@@ -59,6 +60,9 @@ class Overview(Base):
     def overview_newset_all_systems(self):
         return self.find_element(locators['overview.newest.allsystem'])
 
+    def go_to_overview_view_inventory(self):
+        self.click(locators['overview.viewinventory'])
+
     def overview_plan_summary(self):
         return self.find_element((locators['overview.plan.summary'])).text
 
@@ -70,5 +74,8 @@ class Overview(Base):
 
     def go_to_overview_planner(self):
         self.click(locators['overview.plan.createplan'])
+
+    def go_to_overview_view_planner(self):
+        self.click(locators['overview.viewplanner'])
 
 

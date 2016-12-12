@@ -11,10 +11,10 @@ class NotSupportedBrowser(Exception):
       Supported browser are : firefox, chrome
     """
 
-class Firefox(webdriver.Firefox):
-    """
-    Custom Firefox for custom logging
-    """
+#class Firefox(webdriver.Firefox):
+#    """
+#    Custom Firefox for custom logging
+#    """
 
 
 class Chrome(webdriver.Chrome):
@@ -27,8 +27,12 @@ def browser():
     webdriver_name = settings.webdriver.lower()
     if settings.browser == 'selenium':
         if webdriver_name == 'chrome':
-            return webdriver.Chrome(settings.rhn_login.chrome_driver_path)
+            chrome_options = webdriver.ChromeOptions()
+            prefs = {"download.default_directory": "./downloads"}
+            chrome_options.add_experimental_option("prefs", prefs)
+            return webdriver.Chrome(settings.rhn_login.chrome_driver_path,
+                                    chrome_options=chrome_options)
         elif webdriver_name == 'firefox':
-            return webdriver.Firefox(firefox_binary=settings.webdriver_binary)
+            return webdriver.Firefox()
         else:
             raise NotSupportedBrowser
