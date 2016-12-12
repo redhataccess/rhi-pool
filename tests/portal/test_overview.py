@@ -58,5 +58,3 @@ class OverviewTabTestCase(UITestCase):
             Navigator(self.browser).go_to_overview()
             self.overview.go_to_overview_planner()
 
-            #Go to top of the page
-            self.browser.execute_script('scroll(0, 0);')

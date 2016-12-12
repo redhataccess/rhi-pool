@@ -24,4 +24,7 @@ class Login(Base):
 
     def logout(self):
         """ Log out from Insights UI"""
+        self.browser.execute_script('scroll(0, 0);')
+        # Adding explicit wait as web page is taking too long to respond
+        time.sleep(5)
         Navigator(self.browser).go_to_logout()
