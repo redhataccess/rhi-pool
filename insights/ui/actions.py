@@ -1,7 +1,11 @@
 import time
+import logging
 from insights.ui.base import Base, UINoSuchElementError, UIError
-from insights.ui.locators import action_locators
+from insights.ui.locators import action_locators, locators
 from insights.ui.navigator import Navigator
+
+LOGGER = logging.getLogger('insights_portal')
+
 
 class Actions(Base):
     """
@@ -9,6 +13,12 @@ class Actions(Base):
     """
     def navigate_to_entity(self):
         Navigator(self.browser).go_to_actions()
+
+    def click_on_actions(self):
+        self.click(action_locators['actions.menu'])
+        time.sleep(3)
+        self.wait_until_element_invisible(action_locators['actions.filter.invisible'],
+                                          timeout=50)
 
     def actions_title(self):
         self.wait_until_element(action_locators['actions.title'], timeout=50)
@@ -18,7 +28,7 @@ class Actions(Base):
         return self.find_element(action_locators['actions.pie.desc']).text
 
     def actions_pie_count(self):
-        self.wait_until_text_present(action_locators['actions.pie.count'], '1010')
+        self.wait_until_element(action_locators['actions.pie.count'])
         return self.find_element(action_locators['actions.pie.count']).text
 
     def actions_desc_count(self):
@@ -50,3 +60,22 @@ class Actions(Base):
             actions.append(section.text)
         return actions
 
+    def go_to_section(self, name=None):
+        """
+        Require Section name to navigate to
+        :param name:
+        :return:
+        """
+        if name is not None:
+            LOGGER.info("Checking section " + name)
+            self.wait_until_element_invisible(action_locators['actions.filter.invisible'],
+                                              timeout=50)
+            sections = self.find_elements(action_locators['actions.section.names'])
+            for section in sections:
+                if name == section.text:
+                    self.click(section)
+                    break
+
+    def get_section_title(self):
+        self.wait_until_element(action_locators['actions.section.title'], timeout=50)
+        return self.find_element(action_locators['actions.section.title']).text
