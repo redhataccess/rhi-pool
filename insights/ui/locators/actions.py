@@ -5,8 +5,14 @@ from selenium.webdriver.common.by import By
 from .model import LocatorDict
 
 action_locators = LocatorDict({
+    "actions.menu": (
+        By.LINK_TEXT, ("Actions")
+    ),
     "actions.title": (
         By.XPATH, ("//h1[contains(@class, 'page-title')]/span")
+    ),
+    "actions.filter.invisible": (
+        By.XPATH, ("//div[contains(@class, 'action-filters')]")
     ),
     "actions.pie.desc": (
         By.XPATH, ("//div[contains(@class, 'col-sm-offset-1')]/p[1]/span")
@@ -40,5 +46,8 @@ action_locators = LocatorDict({
     ),
     "actions.section.names":(
         By.XPATH, ("//div[@class='tbody-scrollable']/table/tbody/tr/td[1]")
+    ),
+    "actions.section.title": (
+        By.XPATH, ("//div[contains(@class,'col-xs-12')]/h1")
     )
 })

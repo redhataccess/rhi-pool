@@ -13,6 +13,7 @@ class ActionstabTestCase(UITestCase):
         """
         This test verifies all the elements available on Actions page
         """
+
         filename = 'all_actions.csv'
         with Session(self.browser):
             Navigator(self.browser).go_to_actions()
@@ -42,3 +43,14 @@ class ActionstabTestCase(UITestCase):
             self.assertEqual(4, self.actions.actions_section_size())
             self.assertItemsEqual(self.actions_sections,
                                   self.actions.all_sections_name())
+
+    def test_positive_navigate_to_sections(self):
+        """
+        This test navigates to all sections available on Actions page
+        """
+        with Session(self.browser):
+            Navigator(self.browser).go_to_actions()
+            for section_name in self.actions_sections:
+                self.actions.go_to_section(section_name)
+                self.assertEqual(section_name, self.actions.get_section_title())
+                self.actions.click_on_actions()

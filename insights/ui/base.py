@@ -134,6 +134,25 @@ class Base(object):
             )
             return None
 
+    def wait_until_element_invisible(self, locator, timeout=12, poll_frequency=0.5):
+        try:
+            self.browser.implicitly_wait(3)
+            element = WebDriverWait(
+                self.browser, timeout, poll_frequency
+            ).until(
+                expected_conditions.invisibility_of_element_located(locator),
+                message=u'Element is not clickable %s' %(locator[1])
+            )
+            return element
+        except TimeoutException as err:
+            self.logger.debug(
+                u"%s: Waiting for text '%s' to be present under %s",
+                type(err).__name__,
+                locator[1],
+                err
+            )
+            return None
+
     def field_update(self, loc_string, newtext):
         """
         Function to replace the existing/default text from textbox
