@@ -73,9 +73,33 @@ class Actions(Base):
             sections = self.find_elements(action_locators['actions.section.names'])
             for section in sections:
                 if name == section.text:
+                    LOGGER.info("Clicking on " + section.text)
                     self.click(section)
                     break
 
     def get_section_title(self):
         self.wait_until_element(action_locators['actions.section.title'], timeout=50)
         return self.find_element(action_locators['actions.section.title']).text
+
+    def click_first_row_on_sections(self):
+        self.wait_until_element_invisible(action_locators['actions.filter.invisible'],
+                                          timeout=50)
+        time.sleep(3)  # Adding explicit sleep as it shows old table for a moment
+        self.click(action_locators['actions.section.firstrow'])
+
+    def click_first_impacted_system(self):
+        self.wait_until_element(action_locators['actions.impacted.systemfirst'])
+        self.click(action_locators['actions.impacted.systemfirst'])
+        self.wait_until_element(action_locators['actions.system.modal.hostname'])
+        return self.find_element(action_locators['actions.system.modal.hostname']).text
+
+    def get_impacted_system_hostname(self):
+        self.wait_until_element(action_locators['actions.system.hostname'], timeout=100)
+        return self.find_element(action_locators['actions.system.hostname']).text
+
+    def close_system_modal(self):
+        self.click(action_locators['actions.system.close'])
+        self.wait_until_element_invisible(action_locators['actions.system.close'],
+                                          timeout=50)
+        self.wait_until_element(action_locators['actions.menu'], timeout=100)
+

@@ -49,5 +49,24 @@ action_locators = LocatorDict({
     ),
     "actions.section.title": (
         By.XPATH, ("//div[contains(@class,'col-xs-12')]/h1")
+    ),
+    "actions.section.table": (
+        By.ID, ("rha-actions-table")
+    ),
+    "actions.section.firstrow": (
+    By.XPATH, ("//tr[@class='legend-item']")
+    ),
+    "actions.impacted.systemfirst": (
+        By.XPATH, ("//table[@id='rha-actions-rule-table']/tbody/tr")
+    ),
+    "actions.system.hostname":(
+        By.XPATH, ("//table[@id='rha-actions-rule-table']/tbody/tr/td[2]/a")
+
+    ),
+    "actions.system.modal.hostname": (
+        By.XPATH, ("//div[@class='modal-title']/h2/div/span")
+    ),
+    "actions.system.close": (
+        By.CSS_SELECTOR, ("div[ng-click='close()']")
     )
 })

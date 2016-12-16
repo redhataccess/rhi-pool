@@ -7,7 +7,7 @@ from insights.configs.base import get_project_root
 
 
 class ActionstabTestCase(UITestCase):
-    actions_sections = ['Availability', 'Performance', 'Security', 'Stability']
+    actions_sections = ['Performance', 'Availability', 'Security', 'Stability']
 
     def test_positive_actions_elements(self):
         """
@@ -48,9 +48,27 @@ class ActionstabTestCase(UITestCase):
         """
         This test navigates to all sections available on Actions page
         """
+
         with Session(self.browser):
             Navigator(self.browser).go_to_actions()
             for section_name in self.actions_sections:
                 self.actions.go_to_section(section_name)
                 self.assertEqual(section_name, self.actions.get_section_title())
                 self.actions.click_on_actions()
+
+    def test_positive_impacted_systems_info(self):
+        """
+        This test verifies impacted system modal
+        Navigates from Action page till impacted system modal
+        """
+        with Session(self.browser):
+            Navigator(self.browser).go_to_actions()
+            for section_name in self.actions_sections:
+                self.actions.go_to_section(section_name)
+                self.actions.click_first_row_on_sections()
+                system_host = self.actions.get_impacted_system_hostname()
+                system_modal_host = self.actions.click_first_impacted_system()
+                self.assertEqual(system_host, system_modal_host, msg="Hostname is not matching")
+                self.actions.close_system_modal()
+                self.actions.click_on_actions()
+
