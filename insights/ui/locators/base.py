@@ -11,7 +11,7 @@ locators = LocatorDict({
     "login.password": (By.ID, 'password'),
     "login.submit": (By.ID, '_eventId_submit'),
 
-    #Overview
+    # Overview
     "overview.title": (By.XPATH, ("//h1[contains(@class, 'page-title')]/span")
                        ),
     "overview.title.icon": (
@@ -28,11 +28,11 @@ locators = LocatorDict({
         ("//h2[@class='title']/i[contains(@class, 'fa-fire')]")
     ),
     "overview.latest.news": (
-      By.XPATH,
-      ("//span[@class='handcrafted-content']/p")
+        By.XPATH,
+        ("//span[@class='handcrafted-content']/p")
     ),
 
-    #Elements under Actions summary on Overview
+    # Elements under Actions summary on Overview
     "overview.actions.availability": (
         By.XPATH,
         ("//div[contains(@class, 'availability-color')]/div[@class='text']/div[@class='msg']")
@@ -67,7 +67,7 @@ locators = LocatorDict({
     ),
     "overview.viewactions": (By.LINK_TEXT, ("View actions")),
 
-    #Elements under Newest systems on Overview
+    # Elements under Newest systems on Overview
     "overview.newest.summary": (
         By.XPATH,
         ("//a[@ui-sref='app.inventory']/preceding-sibling::span")
@@ -79,7 +79,7 @@ locators = LocatorDict({
     ),
     "overview.viewinventory": (By.LINK_TEXT, ("View inventory")),
 
-    #Elements under Plan summary
+    # Elements under Plan summary
     "overview.plan.summary": (
         By.XPATH,
         ("//a[@ui-sref='app.maintenance']/preceding-sibling::span[2]")
@@ -89,7 +89,7 @@ locators = LocatorDict({
     ),
     "overview.viewplanner": (By.LINK_TEXT, ("View planner")),
 
-    #Elements on Inventory page
+    # Elements on Inventory page
     "inventory.search.box": (
         By.CSS_SELECTOR, ("input[ng-model='model']")
     ),
@@ -102,8 +102,47 @@ locators = LocatorDict({
     "inventory.system.type": (
         By.CSS_SELECTOR, ("strong[ng-if='includeText']")
     ),
+    "inventory.not.checking.in": (
+        By.XPATH, ("//span[contains(text(),'Show only')]"))
+    ,
+    "inventory.system.count": (
+        By.XPATH, ("//div[contains(@class, 'col-sm-4 bulk-actions-dropdown')]/h3")
+    ),
+    "inventory.expand.all": (
+        By.XPATH, ("//*[@class='ng-animate-enabled inventory-actions']//*[text()='Expand All']")
+    ),
+    "inventory.hostname": (
+        By.XPATH, ("//*[@class='btn-group sort-button-group insights-dropdown']//*[text()='Hostname']")
+    ),
+    "inventory.with_actions.tab": (
+        By.ID, ('rha-multibutton-inventoryWithActions')
+    ),
+    "inventory.without_action.tab": (
+        By.ID, ('rha-multibutton-inventoryWithoutActions')
+    ),
+    "inventory.toggle": (
+        By.XPATH, "//label[@for='cmn-toggle-2']"
+    ),
+    "inventory.system.name": (
+        By.XPATH, ("(//strong[contains(@ng-click, 'showActions()')])[1]")
+    ),
+    "inventory.system.name.text": (
+        By.XPATH, ("(//strong[contains(@ng-click, 'showActions()')])[1]")
+    ),
+    "inventory.close.button": (
+        By.XPATH, ("//div[contains(@class, 'fa fa-close pull-right')]")
+    ),
+    "inventory.system.count1": (
+        By.XPATH, ("//div[@class='col-sm-4 text-center-sm']")
+    ),
+    "inventory.dropdown.button": (
+        By.XPATH, ("//a[contains (text(), 'Hostname')][1]")
+    ),
+    "inventory.system.name.detail": (
+        By.XPATH, ("//div[contains(@class, 'ellipsis-overflow')]")
+    ),
 
-    #Actions Insights page elements
+    # Actions Insights page elements
     "actions.title": (
         By.XPATH, ("//h1[contains(@class, 'page-title')]/span")
     )
