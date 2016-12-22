@@ -309,27 +309,13 @@ class ArchiveSettings(FeatureSettings):
         self.archive_file_path = None
 
     def read(self, reader):
-        self.new_bash_version = reader.get(
-            'upload_archive', 'new_bash_version'
-        )
-        self.un_archive_file_location = reader.get(
-            'upload_archive', 'un_archive_file_location'
-        )
-        self.machine_id_path = reader.get(
-            'upload_archive', 'machine_id_path'
-        )
-        self.search_file_path = reader.get(
-            'upload_archive', 'search_file_path'
-        )
         self.archive_file_path = reader.get(
             'upload_archive', 'archive_file_path'
         )
 
     def validate(self):
         validation_errors = []
-        if not any((self.new_bash_version,
-                    self.un_archive_file_location, self.machine_id_path,
-                    self.search_file_path, self.archive_file_path)):
+        if not any((self.archive_file_path)):
             validation_errors.append(
             'Upload archieve details are not provided.'
             )
