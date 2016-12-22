@@ -5,7 +5,7 @@ auth_url=<auth_url for openstack instance>
 project_id=<project_id>
 
 [ssh]
-key_path=/path/to/jenkins_key
+ssh_key_path=/path/to/jenkins_key
 
 [rhn_login]
 base_url=<base_url>
@@ -49,3 +49,17 @@ rhel6_repo= <rhel6_base_repo>
 rhel7_repo=<rhel7_base_repo>
 insights_repo_el6=<insights_el6>
 insights_repo_el7=<insights_el7>
+
+[upload_archive]
+bash_version =
+new_bash_version =
+un_archive_file_location =
+machine_id_path =
+search_file_path =
+archive_file_path =
+
+[insights]
+browser=selenium
+webdriver=<chrome or firefox>
+webdriver_binary=<Firefox or chromedriver binary path>
+screenshots_path=<Screenshots path>

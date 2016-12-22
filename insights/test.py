@@ -1,5 +1,8 @@
 import logging
 import unittest
+from datetime import datetime
+import os
+import sys
 from insights.configs import settings
 from insights.ui.browser import browser
 from insights.ui.login import Login
@@ -49,11 +52,41 @@ class UITestCase(TestCase):
     def setUp(self):
         super(UITestCase, self).setUp()
         self.browser = browser()
+        self.addCleanup(self.browser.quit)
         self.browser.maximize_window()
         self.browser.get(settings.rhn_login.base_url)
+        self.addCleanup(self.take_screenshot)
+
+        #Library methods
         self.login = Login(self.browser)
         self.overview = Overview(self.browser)
         self.inventory = Inventory(self.browser)
         self.actions = Actions(self.browser)
 
-
+    def take_screenshot(self):
+        """Take screen shot from the current browser window.
+        The screenshot named ``screenshot-YYYY-mm-dd_HH_MM_SS.png`` will be
+        placed on the path specified by
+        ``settings.screenshots_path/YYYY-mm-dd/ClassName-method_name-``.
+        All directories will be created if they don't exist. Make sure that the
+        user running insights have the right permissions to create files and
+        directories matching the complete.
+        """
+        if sys.exc_info()[0]:
+            # Take screenshot if any exception is raised and the test method is
+            # not in the skipped tests.
+            now = datetime.now()
+            path = os.path.join(
+                settings.screenshots_path,
+                now.strftime('%Y-%m-%d'),
+            )
+            if not os.path.exists(path):
+                os.makedirs(path)
+            filename = '{0}-{1}-screenshot-{2}.png'.format(
+                type(self).__name__,
+                self._testMethodName,
+                now.strftime('%Y-%m-%d_%H_%M_%S')
+            )
+            path = os.path.join(path, filename)
+            LOGGER.debug('Saving screenshot %s', path)
+            self.browser.save_screenshot(path)

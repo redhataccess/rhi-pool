@@ -409,6 +409,7 @@ class Settings(object):
         self._configured = False
         self.reader = None
         self._validation_error = []
+        self.screenshots_path = None
         self.webdriver = None
         self.webdriver_binary = None
         self.webdriver_desired_capabilities = None
@@ -497,6 +498,9 @@ class Settings(object):
         )
         self.webdriver_binary = self.reader.get(
             'insights', 'webdriver_binary', None
+        )
+        self.screenshots_path = self.reader.get(
+            'insights', 'screenshots_path', '/tmp/insights/screenshots'
         )
 
     def _configure_logging(self):

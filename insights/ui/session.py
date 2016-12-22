@@ -34,7 +34,6 @@ class Session(object):
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type is None:
             self.logout()
-            self.close()
 
     def login(self):
         """Utility function to call Login instance login method"""
