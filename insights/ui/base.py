@@ -4,6 +4,7 @@ import logging
 
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
 from insights.ui.locators import locators, Locator
@@ -57,6 +58,18 @@ class Base(object):
                 locator[1],
                 err
             )
+        except StaleElementReferenceException as err:
+            self.logger.debug(
+                u'%s: Element not attached to DOM %s: %s',
+                type(err).__name__,
+                locator[1],
+                err
+            )
+            self.browser.find_element(*locator)
+            if _webelement.is_displayed():
+                return _webelement
+            else:
+                return None
         return None
 
     def find_elements(self, locator):
@@ -86,6 +99,20 @@ class Base(object):
                 locator[1],
                 err
             )
+        except StaleElementReferenceException as err:
+            self.logger.debug(
+                u'%s: Element not attached to DOM %s: %s',
+                type(err).__name__,
+                locator[1],
+                err
+            )
+            _webelements =  self.browser.find_elements(*locator)
+            webelements = []
+
+            for _webelement in _webelements:
+                if _webelement.is_displayed():
+                    webelements.append(_webelement)
+            return webelements
         return None
 
     def _search_locator(self):
