@@ -142,8 +142,45 @@ locators = LocatorDict({
         By.XPATH, ("//div[contains(@class, 'ellipsis-overflow')]")
     ),
 
-    # Actions Insights page elements
-    "actions.title": (
+    # Elements under Planner page 
+    "planner.title": (
         By.XPATH, ("//h1[contains(@class, 'page-title')]/span")
+    ),
+    "planner.create.plan.text": (
+        By.XPATH, ("//span[contains(text(),'Create')]")
+    ),
+    "planner.new.plan.text": (
+        By.XPATH, ("//span[contains(text(),'New')]")
+    ),
+    "planner.search.box": (
+        By.XPATH, ("//input[contains(@ng-model,'model')]")
+    ),
+    "planner.search.icon": (
+        By.XPATH, ("//span[@class='input-group-addon']")
+    ),
+    "planner.past.button": (
+        By.XPATH, ("//button[contains(.,'Past')]")
+    ),
+    "planner.not.scheduled.button": (
+        By.XPATH, ("//button[contains(.,'Not')]")
+    ),
+    "planner.suggestion.button": (
+        By.XPATH, ("//button[contains(.,'Suggestions')]")
+    ),
+    "planner.future.button": (
+        By.XPATH, ("//button[contains(.,'Future')]")
+    ),
+    "planner.delete.button": (
+        By.XPATH, ("//i[contains(@class, 'fa fa-trash-o action')]")
+    ),
+    "planner.create.plan.button": (
+        By.XPATH, ("//*[@class='create-plan' and contains(@ng-click,'quickAdd()')]")
+    ),
+    "planner.all.button": (
+        By.XPATH, ("//div[contains(@class, 'col-sm-4 col-md-7')]")
+    ),
+    "planner.yes.popup.button" :(
+        By.XPATH,("//button[contains(.,'Yes')]")
     )
 })
+
