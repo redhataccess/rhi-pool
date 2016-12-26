@@ -1,4 +1,4 @@
-python-novaclient
+python-novaclient==6.0.0
 requests
 paramiko==1.16.0
 selenium
