@@ -33,6 +33,7 @@ remote_branch=<remote branch id for Satellite 6>
 remote_leaf=<remote leaf id for Satellite 6>
 registered_machine_id=<machine_id for machine registered with Satellite 6>
 hostname=<hostname of the registered machine>
+upload_archive_sat6=/path/to/insights-*.tar.gz
 
 [upload_archive]
 archive_file_path=/path/to/archive_file
