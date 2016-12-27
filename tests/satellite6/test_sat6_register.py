@@ -49,6 +49,7 @@ class Satellite6APITestCase(unittest.TestCase):
         files = {'file': open(self.archive_location, "rb")}
         self.upload = self.session.post(self.base_url + upload_api + '/' +
                                         self.system_id, files=files)
+        LOGGER.info(self.upload.json())
         Util.log_assert(self.upload.status_code == 201, "Upload archive was not successful!")
         LOGGER.info("Upload done successfully")
 
