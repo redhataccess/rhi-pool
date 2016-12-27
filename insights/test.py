@@ -9,6 +9,7 @@ from insights.ui.login import Login
 from insights.ui.overview import Overview
 from insights.ui.inventory import Inventory
 from insights.ui.actions import Actions
+from insights.ui.planner import Planner
 
 LOGGER = logging.getLogger(__name__)
 
@@ -62,6 +63,7 @@ class UITestCase(TestCase):
         self.overview = Overview(self.browser)
         self.inventory = Inventory(self.browser)
         self.actions = Actions(self.browser)
+        self.planner = Planner(self.browser)
 
     def take_screenshot(self):
         """Take screen shot from the current browser window.
