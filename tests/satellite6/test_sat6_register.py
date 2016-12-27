@@ -23,7 +23,7 @@ class Satellite6APITestCase(unittest.TestCase):
         self.remote_leaf = settings.sat62.remote_leaf
         self.system_id = settings.sat62.registered_machine_id
         self.hostname = settings.sat62.hostname
-        self.archive_location = settings.upload_archive.archive_file_path
+        self.archive_location = settings.sat62.upload_archive_sat6
         LOGGER.info(self.hostname)
         LOGGER.info(self.system_id)
 

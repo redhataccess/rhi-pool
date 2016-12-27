@@ -226,6 +226,7 @@ class Sat62Settings(FeatureSettings):
         self.remote_leaf = None
         self.registered_machine_id = None
         self.hostname = None
+        self.upload_archive_sat6 = None
 
     def read(self, reader):
         self.sat6_cert = reader.get(
@@ -242,6 +243,8 @@ class Sat62Settings(FeatureSettings):
             'sat62', 'registered_machine_id')
         self.hostname = reader.get(
             'sat62', 'hostname')
+        self.upload_archive_sat6 = reader.get(
+            'sat62',  'upload_archive_sat6')
 
     def validate(self):
         validation_errors = []
