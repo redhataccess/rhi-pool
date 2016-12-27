@@ -489,7 +489,7 @@ class Settings(object):
             'insights', 'webdriver_binary', None
         )
         self.screenshots_path = self.reader.get(
-            'insights', 'screenshots_path', '/tmp/insights/screenshots'
+            'insights', 'screenshots_path'
         )
 
     def _configure_logging(self):

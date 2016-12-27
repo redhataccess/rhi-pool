@@ -7,26 +7,26 @@ class Navigator(Base):
     def go_to_actions(self):
         self.go_to_insights_url()
         self.wait_until_element(menu_locators['menu.actions'], timeout=100)
-        self.find_element(menu_locators['menu.actions']).click()
+        self.click(menu_locators['menu.actions'])
 
     def go_to_logout(self):
         self.wait_until_element(common_locators['username'])
-        self.find_element(common_locators['username']).click()
+        self.click(common_locators['username'])
         self.wait_until_element(common_locators['logout'])
-        self.find_element(common_locators['logout']).click()
+        self.click(common_locators['logout'])
 
     def go_to_overview(self):
-        self.find_element(menu_locators['menu.overview']).click()
+        self.click(menu_locators['menu.overview'])
         self.wait_until_element(locators['overview.latest'])
 
     def go_to_inventory(self):
-        self.find_element(menu_locators['menu.inventory']).click()
+        self.click(menu_locators['menu.inventory'])
 
     def go_to_planner(self):
-        self.find_element(menu_locators['menu.planner']).click()
+        self.click(menu_locators['menu.planner'])
 
     def go_to_rules(self):
-        self.find_element(menu_locators['menu.rules']).click()
+        self.click(menu_locators['menu.rules'])
 
     def go_to_configuration(self):
-        self.find_element(menu_locators[['menu.config']])
+        self.click(menu_locators['menu.config'])
