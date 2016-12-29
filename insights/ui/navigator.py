@@ -29,4 +29,4 @@ class Navigator(Base):
         self.find_element(menu_locators['menu.rules']).click()
 
     def go_to_configuration(self):
-        self.find_element(menu_locators[['menu.config']])
+        self.find_element(menu_locators['menu.config']).click()
