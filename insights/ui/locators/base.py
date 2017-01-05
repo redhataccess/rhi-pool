@@ -179,8 +179,88 @@ locators = LocatorDict({
     "planner.all.button": (
         By.XPATH, ("//div[contains(@class, 'col-sm-4 col-md-7')]")
     ),
-    "planner.yes.popup.button" :(
-        By.XPATH,("//button[contains(.,'Yes')]")
-    )
-})
+    "planner.yes.popup.button": (
+        By.XPATH, ("//button[contains(.,'Yes')]")
+    ),
 
+    # Elements under Configuration page
+    "conf.hidden.rule": (
+        By.LINK_TEXT, ("Hidden Rules")
+    ),
+    "conf.groups": (
+        By.LINK_TEXT, ("Groups")
+    ),
+    "conf.messaging": (
+        By.LINK_TEXT, ("Messaging")
+    ),
+    "conf.setting": (
+        By.LINK_TEXT, ("Settings")
+    ),
+    "conf.dev": (
+        By.LINK_TEXT, ("Dev")
+    ),
+
+    # Elements under hidden_rule section
+    "conf.hidden.rule.title": (
+        By.XPATH, (" //h2[contains(@class, 'page-title')]/span")
+    ),
+    "conf.hidden.rule.info": (
+        By.XPATH, ("//span[contains(text(),'account')] ")
+    ),
+
+    # Elements under group section
+    "conf.create.group.title": (
+        By.XPATH, ("//span[contains(text(),'Create')]")
+    ),
+    "conf.group.search.box": (
+        By.XPATH, ("//input[@ng-model='newGroup.display_name']")
+    ),
+    "conf.add.group.button": (
+        By.XPATH, ("//i[contains(@class, 'fa fa-plus')]")
+    ),
+    "conf.add.group.text": (
+        By.XPATH, ("//span[contains(text(),'Add Group')]")
+    ),
+    "conf.delete.group": (
+        By.XPATH, ("//span[contains(text(),'Delete Group')]")
+    ),
+    "conf.popup.yes.button": (
+        By.XPATH, ("//button[contains(.,'Yes')]")
+    ),
+    "conf.group.grouplist.text": (
+        By.XPATH, ("//h2[contains(@class, 'page-title')]/span")
+    ),
+
+    # Elements under messaging section
+    "conf.messaging.title": (
+        By.XPATH, ("//h2[contains(@class, 'page-title')]/span")
+    ),
+    "conf.messaging.checkbox": (
+        By.XPATH, ("//input[@ng-model='campaign.enrolled']")
+    ),
+
+    # Elements under settings section
+    "conf.settings.title": (
+        By.XPATH, ("//h2[contains(@class, 'page-title')]/span ")
+    ),
+    "conf.settings.checkbox": (
+        By.XPATH, ("//input[@ng-model='setting.value']")
+    ),
+
+    # Elements under Dev section
+    "conf.dev.demo.mode": (
+        By.XPATH, ("//*[@class='user']//*[text()='Demo Mode']")
+    ),
+    "conf.dev.api.prefix": (
+        By.XPATH, ("//*[@class='user']//*[text()='API Prefix']")
+    ),
+    "conf.dev.api.version": (
+        By.XPATH, ("//*[@class='tab-content']//*[text()='API Version']")
+    ),
+    "conf.dev.api.fake.user": (
+        By.XPATH, ("//*[@class='tab-content']//*[text()='Fake user info']")
+    ),
+    "conf.dev.api.fake.entitlement": (
+        By.XPATH, ("//*[@class='tab-content']//*[text()='Fake Entitlements']")
+    ),
+})
