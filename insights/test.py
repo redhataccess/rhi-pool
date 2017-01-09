@@ -11,6 +11,7 @@ from insights.ui.overview import Overview
 from insights.ui.inventory import Inventory
 from insights.ui.actions import Actions
 from insights.ui.planner import Planner
+from insights.configs.base import get_project_root
 
 LOGGER = logging.getLogger(__name__)
 
@@ -81,10 +82,19 @@ class UITestCase(TestCase):
             # Take screenshot if any exception is raised and the test method is
             # not in the skipped tests.
             now = datetime.now()
-            path = os.path.join(
-                settings.screenshots_path,
-                now.strftime('%Y-%m-%d'),
-            )
+            if not settings.screenshots_path:
+                #Screenshots will be saved at project root path
+                path = os.path.join(
+                    get_project_root(),
+                    'screenshots',
+                    now.strftime('%Y-%m-%d'),
+                )
+            else:
+                #Screenshots will be saved at specified location in pool.conf
+                path = os.path.join(
+                    settings.screenshots_path,
+                    now.strftime('%Y-%m-%d'),
+                )
             if not os.path.exists(path):
                 os.makedirs(path)
             filename = '{0}-{1}-screenshot-{2}.png'.format(
