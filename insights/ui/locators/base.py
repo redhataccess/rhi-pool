@@ -263,4 +263,9 @@ locators = LocatorDict({
     "conf.dev.api.fake.entitlement": (
         By.XPATH, ("//*[@class='tab-content']//*[text()='Fake Entitlements']")
     ),
+
+    #elements under Rules section
+    "rules.search.box": (
+        By.XPATH, ("//input[contains(@class, 'search-box')]")
+    )
 })
