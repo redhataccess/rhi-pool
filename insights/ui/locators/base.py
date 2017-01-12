@@ -264,8 +264,62 @@ locators = LocatorDict({
         By.XPATH, ("//*[@class='tab-content']//*[text()='Fake Entitlements']")
     ),
 
+
     #elements under Rules section
     "rules.search.box": (
         By.XPATH, ("//input[contains(@class, 'search-box')]")
+    ),
+
+    # Elements on Header tab
+    "header.help.text": (
+        By.XPATH, ("//strong[contains(text(),'Help')]")
+    ),
+    "header.getting.started": (
+        By.LINK_TEXT, ("Getting Started")
+    ),
+    "header.more.info": (
+        By.LINK_TEXT, ("More Info")
+    ),
+    "header.security": (
+        By.LINK_TEXT, ("Security")
+    ),
+    "header.browser.support": (
+        By.LINK_TEXT, ("Browser Support")
+    ),
+    "header.insights.api": (
+        By.LINK_TEXT, ("Insights API Documentation")
+    ),
+
+    # Elements on info Page
+    "header.info.text": (
+        By.XPATH, ("//span[contains(.,'Introduction to Red Hat Insights')]")
+    ),
+
+    # Elements on Security Page
+    "header.security.text": (
+        By.XPATH, ("//*[@class='container info-page']//section/h1")
+    ),
+    "header.security.click": (
+        By.XPATH, ("//a[@ui-sref='info.security']")
+    ),
+
+    # Elements on Browser Support Page
+    "header.browser.support.title": (
+        By.XPATH, ("//*[@class='container']//*[text()='Browser Support Policy']")
+    ),
+
+    # Elements on Insights api documentation page
+    "header.insights.api.documentation": (
+        By.XPATH, ("//*[@id='project']//*[text()='Red Hat Insights API Documentation']")
+    ),
+    "header.notification.button": (
+        By.XPATH, ("//i[contains(@class, 'fa fa-bullseye')]")
+    ),
+    "header.notification.view.all": (
+        By.XPATH, ("//a[@ui-sref='app.announcements']")
+    ),
+    "header.notification.announcement": (
+        By.XPATH, ("//span[contains(text(),'Announcements')]")
+
     )
 })
