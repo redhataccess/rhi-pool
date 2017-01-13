@@ -31,3 +31,6 @@ class Navigator(Base):
     def go_to_configuration(self):
         self.click(menu_locators['menu.config'])
 
+    def go_to_help_tab(self):
+        self.click(menu_locators['menu.help'])
+

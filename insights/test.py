@@ -6,6 +6,7 @@ import sys
 from insights.configs import settings
 from insights.ui.browser import browser
 from insights.ui.configuration import Configuration
+from insights.ui.header import Header
 from insights.ui.login import Login
 from insights.ui.overview import Overview
 from insights.ui.inventory import Inventory
@@ -69,6 +70,9 @@ class UITestCase(TestCase):
         self.planner = Planner(self.browser)
         self.configuration = Configuration(self.browser)
         self.rules = Rules(self.browser)
+        self.header = Header(self.browser)
+
+
 
 
     def take_screenshot(self):
