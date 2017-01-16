@@ -36,7 +36,7 @@ def test_insights_analysis_upload(upload_file):
     LOGGER.info("Status code: %s", result.status_code)
     assert result.status_code <= 201
     reports = result.json().get('reports')
-    print len(reports)
+    LOGGER.info(len(reports))
 
     for report in reports:
         rule_ids.append(report['rule_id'])
