@@ -1,3 +1,4 @@
+import time
 from insights.ui.base import Base, UIError, UINoSuchElementError
 from insights.ui.locators import locators
 from insights.ui.navigator import Navigator
@@ -51,20 +52,31 @@ class Inventory(Base):
         return self.find_element(locators['inventory.search.icon'])
 
     def inventory_dropdown_button(self):
-        self.find_element(locators['inventory.dropdown.button']).click()
+        self.click(locators['inventory.dropdown.button'])
 
     def inventory_click_system_name(self):
-        self.find_element(locators['inventory.system.hostname']).click()
+        self.click(locators['inventory.system.hostname'])
 
     def inventory_text_system_name(self):
         return self.find_element(locators['inventory.system.hostname']).text
 
     def inventory_system_name_on_detail_page(self):
+        time.sleep(2)
         return self.find_element(locators['inventory.system.name.detail']).text
 
     def inventory_get_hostname(self):
         return self.find_element(locators['inventory.system.name']).text
 
     def inventory_cross_button(self):
-        self.find_element(locators['inventory.close.button']).click()
+        time.sleep(2)
+        self.click(locators['inventory.close.button'])
+
+    def inventory_groups_label(self):
+        return self.find_element(locators['inventory.groups.label']).text
+
+    def inventory_groups_dropdown_click(self):
+        self.click(locators['inventory.group.dropdown'])
+
+    def inventory_groups_dropdown_text(self):
+        return self.find_element(locators['inventory.group.dropdown.text']).text
 

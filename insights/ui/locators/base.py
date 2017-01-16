@@ -141,6 +141,15 @@ locators = LocatorDict({
     "inventory.system.name.detail": (
         By.XPATH, ("//div[contains(@class, 'ellipsis-overflow')]")
     ),
+    "inventory.groups.label" :(
+        By.XPATH,("//span[contains(text(),'Groups')]")
+    ),
+    "inventory.group.dropdown" :(
+        By.XPATH,("//select[@ng-model='group']")
+    ),
+    "inventory.group.dropdown.text" :(
+        By.XPATH,("//select[@ng-model='group']/option[text()='123']")
+    ),
 
     # Elements under Planner page 
     "planner.title": (

@@ -1,3 +1,5 @@
+import time
+
 from insights.ui.locators import locators, menu_locators, common_locators
 from insights.ui.base import Base
 
@@ -29,6 +31,7 @@ class Navigator(Base):
         self.click(menu_locators['menu.rules'])
 
     def go_to_configuration(self):
+        time.sleep(2)
         self.click(menu_locators['menu.config'])
 
     def go_to_help_tab(self):
