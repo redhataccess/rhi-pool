@@ -384,6 +384,47 @@ class RepoSettings(FeatureSettings):
             )
         return validation_errors
 
+class InsightsCLISettings(FeatureSettings):
+    def __init__(self, *args, **kwargs):
+        super(InsightsCLISettings, self).__init__(*args, **kwargs)
+        self.upload_url = None
+        self.archive_file1 = None
+        self.archive_file2 = None
+        self.archive_file3 = None
+        self.archive_file4 = None
+        self.hostname = None
+        self.username = None
+
+    def read(self, reader):
+        self.upload_url = reader.get(
+            'insights_cli', 'upload_url'
+        )
+        self.archive_file1 = reader.get(
+            'insights_cli', 'archive_file1'
+        )
+        self.archive_file2 = reader.get(
+            'insights_cli', 'archive_file2'
+        )
+        self.archive_file3 = reader.get(
+            'insights_cli', 'archive_file3'
+        )
+        self.archive_file4 = reader.get(
+            'insights_cli', 'archive_file4'
+        )
+        self.hostname = reader.get(
+            'insights_cli', 'hostname'
+        )
+        self.username = reader.get(
+            'insights_cli', 'username'
+        )
+
+    def validate(self):
+        validation_errors =[]
+        if not any((self.upload_url, self.archive_file1)):
+            validation_errors.append(
+                'upload_url and archive_file path is not provided for Insights CLI'
+            )
+        return validation_errors
 
 class Settings(object):
     """
@@ -415,6 +456,7 @@ class Settings(object):
         self.upload_archive = ArchiveSettings()
         self.env = ENVSettings()
         self.repo = RepoSettings()
+        self.insights_cli = InsightsCLISettings()
 
     def configure(self):
         if self.configured:
@@ -459,6 +501,9 @@ class Settings(object):
         if self.reader.has_section('repo'):
             self.repo.read(self.reader)
             self._validation_error.extend(self.repo.validate())
+        if self.reader.has_section('insights_cli'):
+            self.insights_cli.read(self.reader)
+            self._validation_error.extend(self.insights_cli.validate())
 
         if self._validation_error:
             raise ImproperlyConfigured(
@@ -532,4 +577,3 @@ class Settings(object):
                 if isinstance(value, FeatureSettings)
             ]
         return self._all_features
-
