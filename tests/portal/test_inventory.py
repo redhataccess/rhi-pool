@@ -1,3 +1,4 @@
+# coding=utf-8
 import logging
 from insights.test import UITestCase
 from insights.ui.session import Session
@@ -36,3 +37,14 @@ class InventoryTabTestCase(UITestCase):
             system_name_on_detail = self.inventory.inventory_system_name_on_detail_page()
             self.assertEqual(system_name.lstrip(), system_name_on_detail)
             self.inventory.inventory_cross_button()
+
+            # Checking group from inventory page 
+            Navigator(self.browser).go_to_configuration()
+            self.configuration.conf_group_tab()
+            self.configuration.conf_group_search_box(search=123)
+            self.assertEqual("Add Group", self.configuration.conf_add_group_text())
+            self.configuration.conf_add_group_button()
+            Navigator(self.browser).go_to_inventory()
+            self.assertEqual('Groups', self.inventory.inventory_groups_label())
+            self.inventory.inventory_groups_dropdown_click()
+            self.assertEqual('123',self.inventory.inventory_groups_dropdown_text())
