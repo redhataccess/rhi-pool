@@ -56,3 +56,12 @@ browser=selenium
 webdriver=<chrome or firefox>
 webdriver_binary=<Firefox or chromedriver binary path>
 screenshots_path=<Screenshots path>
+
+[insights_cli]
+upload_url=<upload url>
+archive_file1=/path/to/archive1
+archive_file2=/path/to/archive2
+archive_file3=/path/to/archive3
+archive_file4=/path/to/archive4
+hostname=<hostname of the insights analysis server>
+username=<username to establish ssh connection to the above host>
