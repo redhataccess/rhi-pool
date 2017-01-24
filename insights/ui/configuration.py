@@ -91,3 +91,19 @@ class Configuration(Base):
 
     def conf_dev_fake_entitlements(self):
         return self.find_element(locators['conf.dev.api.fake.entitlement']).text
+
+    def conf_group_filter(self,system):
+         self.click(locators['conf.group.filter'])
+         self.field_update('conf.group.filter',system)
+
+    def conf_group_available_system_text(self):
+        self.wait_until_element(locators['conf.group.available'], timeout=50)
+        return self.find_element(locators['conf.group.available']).text
+
+    def conf_group_select_visible_text(self):
+        return self.find_element(locators['conf.group.select.visible.text']).text
+
+    def conf_group_select_all_checkbox(self):
+        time.sleep(4)
+        self.click(locators['conf.group.select.all.checkbox'])
+

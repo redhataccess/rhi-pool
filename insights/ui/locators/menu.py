@@ -10,7 +10,7 @@ menu_locators = LocatorDict({
     "menu.planner": (By.XPATH, ("//a[@ui-sref='app.maintenance']")),
     "menu.rules": (By.XPATH, ("//a[@ui-sref='app.rules']")),
     "menu.config": (By.XPATH, ("//a[@ui-sref='app.config']")),
-    "menu.help" :(By.XPATH,("//strong[contains(text(),'Help')]")),
+    "menu.help" :(By.XPATH,("//span[contains(text(),'Help')]")),
 
     #
     "menu.filter": (By.XPATH, ("//span[@class='summary-name']"))

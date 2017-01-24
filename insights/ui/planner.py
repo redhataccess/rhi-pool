@@ -44,11 +44,3 @@ class Planner(Base):
     def planner_search_icon(self):
         return self.find_element(locators['planner.search.icon'])
 
-    def planner_all_sections_name(self):
-        return self.find_element(locators['planner.all.button']).text
-
-    def click_on_planner_filter(self):
-        self.click(locators['planner.past.button'])
-        self.click(locators['planner.not.scheduled.button'])
-        self.click(locators['planner.suggestion.button'])
-        self.click(locators['planner.future.button'])

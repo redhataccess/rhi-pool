@@ -71,14 +71,3 @@ class Header(Base):
 
     def header_notification_icon(self):
         return self.find_element(locators['header.notification.button'])
-
-    def header_notification_icon_click(self):
-        LOGGER.info("Clicking on notification icon")
-        return self.click(locators['header.notification.button'])
-
-    def header_notification_view_all(self):
-        LOGGER.info("Clicking on view all tab")
-        return self.click(locators['header.notification.view.all'])
-
-    def header_notification_announcements(self):
-        return self.find_element(locators['header.notification.announcement']).text
