@@ -271,12 +271,7 @@ class APISettings(FeatureSettings):
         )
 
     def validate(self):
-        validation_errors = []
-        if not any((self.url)):
-            validation_errors.append(
-                'API endpoint is not provided.'
-            )
-        return validation_errors
+        pass
 
 
 class CertsSettings(FeatureSettings):
