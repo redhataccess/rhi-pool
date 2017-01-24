@@ -271,7 +271,7 @@ class APISettings(FeatureSettings):
         )
 
     def validate(self):
-        pass
+        return []
 
 
 class CertsSettings(FeatureSettings):
