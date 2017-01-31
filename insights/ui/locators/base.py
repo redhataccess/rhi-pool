@@ -281,7 +281,7 @@ locators = LocatorDict({
 
     # Elements on Header tab
     "header.help.text": (
-        By.XPATH, ("//strong[contains(text(),'Help')]")
+        By.XPATH, ("//span[contains(text(),'Help')]")
     ),
     "header.getting.started": (
         By.LINK_TEXT, ("Getting Started")
@@ -322,13 +322,20 @@ locators = LocatorDict({
         By.XPATH, ("//*[@id='project']//*[text()='Red Hat Insights API Documentation']")
     ),
     "header.notification.button": (
-        By.XPATH, ("//i[contains(@class, 'fa fa-bullseye')]")
+        By.XPATH, ("//i[contains(@class, 'fa fa-globe')]")
     ),
-    "header.notification.view.all": (
-        By.XPATH, ("//a[@ui-sref='app.announcements']")
-    ),
-    "header.notification.announcement": (
-        By.XPATH, ("//span[contains(text(),'Announcements')]")
 
+    "conf.group.filter": (
+        By.XPATH, "//input[contains(@class,'filter full-width ng-pristine ng-untouched ng-valid ng-empty')]"
+    ),
+    "conf.group.available":(
+        By.XPATH,"//*[@class='col-md-6 group-list']//*[text()='Available Systems']"
+    ),
+    "conf.group.select.visible.text" :(
+        By.XPATH, "//span[contains(text(),'Select Visible')]"
+    ),
+    "conf.group.select.all.checkbox" :(
+        By.XPATH,"(//input[contains(@class,'ng-pristine ng-untouched ng-valid ng-empty')])[2]"
     )
+
 })

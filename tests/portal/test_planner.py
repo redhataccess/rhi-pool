@@ -19,10 +19,6 @@ class PlannerTabTestCase(UITestCase):
             self.assertEqual('New suggested plan', self.planner.planner_new_plan_text())
             self.assertIsNotNone(self.planner.planner_search_box())
             self.assertIsNotNone(self.planner.planner_search_icon())
-            LOGGER.info(self.planner.planner_all_sections_name())
-
-            # Click on buttons
-            self.planner.click_on_planner_filter()
 
             # Create new plan and delete it
             self.planner.planner_create_plan_button()

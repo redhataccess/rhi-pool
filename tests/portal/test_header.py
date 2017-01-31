@@ -14,7 +14,7 @@ class HeaderTabTestCase(UITestCase):
         with Session(self.browser):
             Navigator(self.browser).go_to_help_tab()
             # # Elements present on dropdown
-            self.assertEqual("Help ", self.header.header_text())
+            self.assertEqual("Help", self.header.header_text())
             self.assertEqual("Getting Started", self.header.header_getting_started())
             self.assertEqual("More Info", self.header.header_more_info())
             self.assertEqual("Security", self.header.header_security_text())
@@ -46,10 +46,6 @@ class HeaderTabTestCase(UITestCase):
 
             # Elements present on notification icon
             self.assertIsNotNone(self.header.header_notification_icon())
-            self.header.header_notification_icon_click()
-
-            self.header.header_notification_view_all()
-            self.assertEqual('Announcements',self.header.header_notification_announcements())
             Navigator(self.browser).go_to_overview()
 
 

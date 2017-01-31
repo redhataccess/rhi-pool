@@ -7,7 +7,6 @@ LOGGER = logging.getLogger('insights_portal')
 
 
 class ConfigurationTabTestCase(UITestCase):
-
     def test_positive_configuration_elements(self):
         """ This test verifies all the elements available on configuration page """
 
@@ -18,7 +17,6 @@ class ConfigurationTabTestCase(UITestCase):
             self.assertEqual("Hidden Rules", self.configuration.conf_hidden_rule_text())
             self.assertEqual("These are account wide. You must be an Org Admin to make these changes.",
                              self.configuration.conf_hidden_rule_info())
-
             # Checking Groups section
             self.configuration.conf_group_tab()
             self.configuration.conf_group_search_box(search=123)
