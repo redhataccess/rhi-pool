@@ -519,6 +519,18 @@ class Settings(object):
             LOGGER.info("downloads directory not present")
 
     def _read_insights_settings(self):
+        """Read Insights settings"""
+        self.log_driver_commands = self.reader.get(
+            'insights',
+            'log_driver_commands',
+            ['newSession',
+             'windowMaximize',
+             'get',
+             'findElement',
+             'sendKeysToElement',
+             'clickElement',
+             'mouseMoveTo']
+        )
         self.browser = self.reader.get(
             'insights', 'browser', 'selenium'
         )
