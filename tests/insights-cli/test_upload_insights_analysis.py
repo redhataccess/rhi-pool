@@ -26,12 +26,9 @@ remote_dir_path = '/root/data/' #path for files onn remote machine
 
 def test_insights_analysis_upload(upload_file):
     """
-    Test the response of /upload api end point from insights-
-    analysis server.
     Verify if the result count for /upload api end point matches with
     the result count from insights-cli
-    $insights-cli  --plugin-modules telemetry.rules.plugins sysmgmt --<uplaod_file>
-    :return:
+
     """
     rule_ids = [] #rule_ids list will contain all rule_ids from the json response(/uplaod api)
     error_keys = [] #error_keys will contain all error keys from the json response(/upload api)
@@ -93,8 +90,8 @@ def test_insights_analysis_upload(upload_file):
 
     ssh.copy_files(upload_file, remote_dir_path, remote_file)
     LOGGER.info("Copied the sos reports from base machine to {0}".format(hostname))
-    cmd = 'insights-cli  --plugin-modules telemetry.rules.plugins sysmgmt -- {0}'\
-        .format(remote_file)
+    cmd = 'insights-cli  --plugin-modules telemetry.rules.plugins ' \
+          'diag_insights_rules -- {0}'.format(remote_file)
     output = ssh.run(cmd) #run the above cmd on host
     LOGGER.info(type(output))
 
