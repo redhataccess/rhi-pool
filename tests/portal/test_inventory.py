@@ -22,14 +22,6 @@ class InventoryTabTestCase(UITestCase):
             # Check all elements
             self.assertIsNotNone(self.inventory.inventory_search_icon())
             self.assertIsNotNone(self.inventory.get_inventory_details())
-            self.assertIsNotNone(self.inventory.inventory_toggle())
-            self.assertEqual('Show only not checking in',
-                             self.inventory.inventory_not_checking_in_text())
-            self.assertEqual('EXPAND ALL', self.inventory.inventory_expand_all_text())
-            self.assertEqual('Hostname', self.inventory.inventory_hostname_dropdown_text())
-            self.assertEqual(' WITH ACTIONS', self.inventory.inventory_action_tab_text())
-            self.assertEqual(' WITHOUT ACTIONS', self.inventory.inventory_without_action_tab_text())
-            self.assertIsNotNone(self.inventory.inventory_system_avl_count())
 
             # Checking single inventory
             self.inventory.inventory_click_system_name()
@@ -47,4 +39,4 @@ class InventoryTabTestCase(UITestCase):
             Navigator(self.browser).go_to_inventory()
             self.assertEqual('Groups', self.inventory.inventory_groups_label())
             self.inventory.inventory_groups_dropdown_click()
-            self.assertEqual('123',self.inventory.inventory_groups_dropdown_text())
+            self.assertEqual('All Groups',self.inventory.inventory_groups_dropdown_text())

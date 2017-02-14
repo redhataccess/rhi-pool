@@ -17,6 +17,7 @@ class Inventory(Base):
         self.click(locators['inventory.search.icon'])
 
     def get_inventory_details(self):
+        time.sleep(5)
         hostname = self.find_element(locators['inventory.system.hostname']).text
         sys_type = self.find_element(locators['inventory.system.type']).text
         return hostname, sys_type
@@ -27,32 +28,8 @@ class Inventory(Base):
     def search_box(self):
         return self.find_element(locators['inventory.search.box.placeholder'])
 
-    def inventory_not_checking_in_text(self):
-        return self.find_element(locators['inventory.not.checking.in']).text
-
-    def inventory_system_avl_count(self):
-        return self.find_element(locators['inventory.system.count1']).text
-
-    def inventory_expand_all_text(self):
-        return self.find_element(locators['inventory.expand.all']).text
-
-    def inventory_hostname_dropdown_text(self):
-        return self.find_element(locators['inventory.hostname']).text
-
-    def inventory_action_tab_text(self):
-        return self.find_element(locators['inventory.with_actions.tab']).text
-
-    def inventory_without_action_tab_text(self):
-        return self.find_element(locators['inventory.without_action.tab']).text
-
-    def inventory_toggle(self):
-        return self.find_element(locators['inventory.toggle'])
-
     def inventory_search_icon(self):
         return self.find_element(locators['inventory.search.icon'])
-
-    def inventory_dropdown_button(self):
-        self.click(locators['inventory.dropdown.button'])
 
     def inventory_click_system_name(self):
         self.click(locators['inventory.system.hostname'])
@@ -64,9 +41,6 @@ class Inventory(Base):
         time.sleep(2)
         return self.find_element(locators['inventory.system.name.detail']).text
 
-    def inventory_get_hostname(self):
-        return self.find_element(locators['inventory.system.name']).text
-
     def inventory_cross_button(self):
         time.sleep(2)
         self.click(locators['inventory.close.button'])
@@ -75,8 +49,9 @@ class Inventory(Base):
         return self.find_element(locators['inventory.groups.label']).text
 
     def inventory_groups_dropdown_click(self):
+        time.sleep(2)
         self.click(locators['inventory.group.dropdown'])
 
     def inventory_groups_dropdown_text(self):
-        return self.find_element(locators['inventory.group.dropdown.text']).text
+        return self.find_element(locators['inventory.group.dropdown']).text
 
