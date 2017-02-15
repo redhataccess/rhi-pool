@@ -56,6 +56,8 @@ browser=selenium
 webdriver=<chrome or firefox>
 webdriver_binary=<Firefox or chromedriver binary path>
 screenshots_path=<Screenshots path>
+#Log driver commands. E.g. findElement,sendKeysToElement,clickElement
+log_driver_commands=
 
 [insights_cli]
 upload_url=<upload url>
