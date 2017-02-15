@@ -259,7 +259,7 @@ locators = LocatorDict({
         By.XPATH, ("//i[contains(@class, 'fa fa-globe')]")
     ),
     "conf.group.filter": (
-        By.XPATH, "//input[contains(@class,'filter full-width ng-pristine ng-untouched ng-valid ng-empty')]"
+        By.XPATH, ("//label[text()='Available Systems']/following-sibling::input")
     ),
     "conf.group.available": (
         By.XPATH, "//*[@class='col-md-6 group-list']//*[text()='Available Systems']"
@@ -267,7 +267,27 @@ locators = LocatorDict({
     "conf.group.select.visible.text": (
         By.XPATH, "//span[contains(text(),'Select Visible')]"
     ),
-    "conf.group.select.all.checkbox": (
-        By.XPATH, "(//input[contains(@class,'ng-pristine ng-untouched ng-valid ng-empty')])[2]"
-    )
+
+    # Add system to group
+    "groups.search.box":    (
+        By.XPATH, ("//label[text()='Available Systems']/following-sibling::input")
+    ),
+    "group.checkbox": (
+        By.XPATH, ("(//span[contains(text(),'Select Visible')])[1]")
+    ),
+    "group.add.system" : (
+        By.XPATH, ("(//span[contains(text(),'Add Systems')])[1]")
+    ),
+
+    # Remove Group
+    "group.mimimize.button" :(
+        By.XPATH,"//div[contains(@class, 'fa fa-minus-square-o')]"
+    ),
+
+    "group.remove.group":(
+        By.XPATH, "//span[contains(.,'Delete Group')]"
+    ),
+    "group.yes.popup.button": (
+        By.XPATH, ("//button[contains(.,'Yes')]")
+    ),
 })

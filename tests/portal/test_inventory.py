@@ -19,6 +19,7 @@ class InventoryTabTestCase(UITestCase):
             self.assertEqual("test-k.novalocal", str(host).strip(' '))
             self.assertEqual("RHEL Server", str(sys_type).strip(' '))
 
+
             # Check all elements
             self.assertIsNotNone(self.inventory.inventory_search_icon())
             self.assertIsNotNone(self.inventory.get_inventory_details())
@@ -36,7 +37,23 @@ class InventoryTabTestCase(UITestCase):
             self.configuration.conf_group_search_box(search=123)
             self.assertEqual("Add Group", self.configuration.conf_add_group_text())
             self.configuration.conf_add_group_button()
+
+            # Add Inventory in Group
+            self.inventory.inventory_groups_search_box('test-k.novalocal')
+            self.inventory.inventory_group_checkbox_click()
+            self.inventory.inventory_group_add_systems_click()
+
+            # Check on group dropdown on inventory page
             Navigator(self.browser).go_to_inventory()
             self.assertEqual('Groups', self.inventory.inventory_groups_label())
             self.inventory.inventory_groups_dropdown_click()
-            self.assertEqual('All Groups',self.inventory.inventory_groups_dropdown_text())
+            self.assertEqual('All Groups', self.inventory.inventory_groups_dropdown_text())
+
+            # Remove Group
+            Navigator(self.browser).go_to_configuration()
+            self.configuration.conf_group_tab()
+            self.inventory.minimize_group_on_configuration()
+            self.assertEqual("Delete Group", self.inventory.inventory_remove_group_text())
+            self.inventory.inventory_remove_group()
+            self.assertEqual("Yes",self.inventory.inventory_remove_group_popup_text())
+            self.inventory.inventory_remove_group_popup()

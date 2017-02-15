@@ -36,21 +36,24 @@ class Configuration(Base):
         self.field_update('conf.group.search.box', search)
 
     def conf_add_group_button(self):
-        self.click(locators['conf.add.group.button'])
+        add_group = self.wait_until_element_to_be_clickable(locators['conf.add.group.button'])
+        add_group.click()
 
     def conf_add_group_text(self):
+        LOGGER.info("Adding Group")
         return self.find_element(locators['conf.add.group.text']).text
 
     def conf_delete_group_text(self):
         return self.find_element(locators['conf.delete.group']).text
 
     def conf_delete_group_button(self):
-        time.sleep(2)
-        self.click(locators['conf.delete.group'])
+        conf_delete_group = self.wait_until_element(locators['conf.delete.group'], timeout=100)
+        conf_delete_group.click()
+
 
     def conf_popup_yes_button(self):
-        time.sleep(2)
-        self.click(locators['conf.popup.yes.button'])
+        conf_popup_yes_button = self.wait_until_element(locators['conf.popup.yes.button'],timeout=100)
+        conf_popup_yes_button.click()
 
     def conf_group_list_text(self):
         return self.find_element(locators['conf.group.grouplist.text']).text
@@ -64,8 +67,8 @@ class Configuration(Base):
         self.click(locators['conf.messaging.checkbox'])
 
     def conf_messaging_update_button(self):
-        time.sleep(2)
-        self.click(locators['conf.messaging.update.button'])
+        conf_messaging_update_button = self.wait_until_element(locators['conf.messaging.update.button'])
+        conf_messaging_update_button.click()
 
     def conf_settings_title(self):
         LOGGER.info("Checking settings section")
@@ -92,7 +95,7 @@ class Configuration(Base):
     def conf_dev_fake_entitlements(self):
         return self.find_element(locators['conf.dev.api.fake.entitlement']).text
 
-    def conf_group_filter(self,system):
+    def conf_group_filter(self, system):
          self.click(locators['conf.group.filter'])
          self.field_update('conf.group.filter',system)
 
@@ -104,6 +107,5 @@ class Configuration(Base):
         return self.find_element(locators['conf.group.select.visible.text']).text
 
     def conf_group_select_all_checkbox(self):
-        time.sleep(4)
-        self.click(locators['conf.group.select.all.checkbox'])
-
+        conf_group_select_all_checkbox = self.wait_until_element(locators['conf.group.select.all.checkbox'])
+        conf_group_select_all_checkbox .click()

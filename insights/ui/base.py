@@ -173,12 +173,31 @@ class Base(object):
             return element
         except TimeoutException as err:
             self.logger.debug(
-                u"%s: Waiting for text '%s' to be present under %s",
+                u"%s: Waiting for element '%s' to be present under %s",
                 type(err).__name__,
                 locator[1],
                 err
             )
             return None
+
+    def wait_until_element_to_be_clickable(self, locator, timeout=12, poll_frequency=0.5):
+        try:
+            self.browser.implicitly_wait(3)
+            element = WebDriverWait(
+                self.browser, timeout, poll_frequency
+            ).until(
+                expected_conditions.element_to_be_clickable(locator),
+                message=u'Element is not clickable %s' % (locator[1])
+            )
+            return element
+        except TimeoutException as err:
+                self.logger.debug(
+                    u"%s: Waiting for element '%s' to be clickable under %s",
+                    type(err).__name__,
+                    locator[1],
+                    err
+                )
+                return None
 
     def field_update(self, loc_string, newtext):
         """
