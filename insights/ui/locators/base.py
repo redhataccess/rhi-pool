@@ -32,52 +32,13 @@ locators = LocatorDict({
         ("//span[@class='handcrafted-content']/p")
     ),
 
-    # Elements under Actions summary on Overview
-    "overview.actions.availability": (
-        By.XPATH,
-        ("//div[contains(@class, 'availability-color')]/div[@class='text']/div[@class='msg']")
-    ),
-    "overview.availability.num": (
-        By.XPATH,
-        ("//div[contains(@class, 'availability-color')]/div[@class='num']")
-    ),
-    "overview.actions.stability": (
-        By.XPATH,
-        ("//div[contains(@class, 'stability-color')]/div[@class='text']/div[@class='msg']")
-    ),
-    "overview.stability.num": (
-        By.XPATH,
-        ("//div[contains(@class, 'stability-color')]/div[@class='num']")
-    ),
-    "overview.actions.performance": (
-        By.XPATH,
-        ("//div[contains(@class, 'performance-color')]/div[@class='text']/div[@class='msg']")
-    ),
-    "overview.performance.num": (
-        By.XPATH,
-        ("//div[contains(@class, 'performance-color')]/div[@class='num']")
-    ),
-    "overview.actions.security": (
-        By.XPATH,
-        ("//div[contains(@class, 'security-color')]/div[@class='text']/div[@class='msg']")
-    ),
-    "overview.security.num": (
-        By.XPATH,
-        ("//div[contains(@class, 'security-color')]/div[@class='num']")
-    ),
-    "overview.viewactions": (By.LINK_TEXT, ("View actions")),
-
     # Elements under Newest systems on Overview
     "overview.newest.summary": (
         By.XPATH,
         ("//a[@ui-sref='app.inventory']/preceding-sibling::span")
     ),
-    "overview.newest.firstsystem": (
-        By.XPATH, ("//div[@class='content']/ul/li[1]")),
-    "overview.newest.allsystems": (
-        By.XPATH, ("//div[@class='content']/ul")
-    ),
-    "overview.viewinventory": (By.LINK_TEXT, ("View inventory")),
+    "overview.viewinventory": (By.LINK_TEXT, ("View inventory")
+                               ),
 
     # Elements under Plan summary
     "overview.plan.summary": (
@@ -88,6 +49,7 @@ locators = LocatorDict({
         By.LINK_TEXT, ('CREATE A NEW PLAN')
     ),
     "overview.viewplanner": (By.LINK_TEXT, ("View planner")),
+    "overview.viewactions": (By.LINK_TEXT, ('View actions')),
 
     # Elements on Inventory page
     "inventory.search.box": (
@@ -97,37 +59,13 @@ locators = LocatorDict({
         By.XPATH, ("//span[@class='input-group-addon']")
     ),
     "inventory.system.hostname": (
-        By.CSS_SELECTOR, ("strong[class='hostname']")
+        By.LINK_TEXT, ("test-k.novalocal")
     ),
     "inventory.system.type": (
         By.CSS_SELECTOR, ("strong[ng-if='includeText']")
     ),
-    "inventory.not.checking.in": (
-        By.XPATH, ("//span[contains(text(),'Show only')]"))
-    ,
-    "inventory.system.count": (
-        By.XPATH, ("//div[contains(@class, 'col-sm-4 bulk-actions-dropdown')]/h3")
-    ),
-    "inventory.expand.all": (
-        By.XPATH, ("//*[@class='ng-animate-enabled inventory-actions']//*[text()='Expand All']")
-    ),
     "inventory.hostname": (
         By.XPATH, ("//*[@class='btn-group sort-button-group insights-dropdown']//*[text()='Hostname']")
-    ),
-    "inventory.with_actions.tab": (
-        By.ID, ('rha-multibutton-inventoryWithActions')
-    ),
-    "inventory.without_action.tab": (
-        By.ID, ('rha-multibutton-inventoryWithoutActions')
-    ),
-    "inventory.toggle": (
-        By.XPATH, "//label[@for='cmn-toggle-2']"
-    ),
-    "inventory.system.name": (
-        By.XPATH, ("(//strong[contains(@ng-click, 'showActions()')])[1]")
-    ),
-    "inventory.system.name.text": (
-        By.XPATH, ("(//strong[contains(@ng-click, 'showActions()')])[1]")
     ),
     "inventory.close.button": (
         By.XPATH, ("//div[contains(@class, 'fa fa-close pull-right')]")
@@ -135,20 +73,18 @@ locators = LocatorDict({
     "inventory.system.count1": (
         By.XPATH, ("//div[@class='col-sm-4 text-center-sm']")
     ),
-    "inventory.dropdown.button": (
-        By.XPATH, ("//a[contains (text(), 'Hostname')][1]")
-    ),
+
     "inventory.system.name.detail": (
         By.XPATH, ("//div[contains(@class, 'ellipsis-overflow')]")
     ),
-    "inventory.groups.label" :(
-        By.XPATH,("//span[contains(text(),'Groups')]")
+    "inventory.groups.label": (
+        By.XPATH, ("//span[contains(text(),'Groups')]")
     ),
-    "inventory.group.dropdown" :(
-        By.XPATH,("//select[@ng-model='group']")
+    "inventory.group.dropdown": (
+        By.XPATH, ("//button[contains(.,'All Groups')]")
     ),
-    "inventory.group.dropdown.text" :(
-        By.XPATH,("//select[@ng-model='group']/option[text()='123']")
+    "inventory.group.dropdown.text": (
+        By.XPATH, ("//select[@ng-model='group']/option[text()='123']")
     ),
 
     # Elements under Planner page 
@@ -273,12 +209,10 @@ locators = LocatorDict({
         By.XPATH, ("//*[@class='tab-content']//*[text()='Fake Entitlements']")
     ),
 
-
-    #elements under Rules section
+    # Elements under Rules section
     "rules.search.box": (
         By.XPATH, ("//input[contains(@class, 'search-box')]")
     ),
-
     # Elements on Header tab
     "header.help.text": (
         By.XPATH, ("//span[contains(text(),'Help')]")
@@ -324,18 +258,16 @@ locators = LocatorDict({
     "header.notification.button": (
         By.XPATH, ("//i[contains(@class, 'fa fa-globe')]")
     ),
-
     "conf.group.filter": (
         By.XPATH, "//input[contains(@class,'filter full-width ng-pristine ng-untouched ng-valid ng-empty')]"
     ),
-    "conf.group.available":(
-        By.XPATH,"//*[@class='col-md-6 group-list']//*[text()='Available Systems']"
+    "conf.group.available": (
+        By.XPATH, "//*[@class='col-md-6 group-list']//*[text()='Available Systems']"
     ),
-    "conf.group.select.visible.text" :(
+    "conf.group.select.visible.text": (
         By.XPATH, "//span[contains(text(),'Select Visible')]"
     ),
-    "conf.group.select.all.checkbox" :(
-        By.XPATH,"(//input[contains(@class,'ng-pristine ng-untouched ng-valid ng-empty')])[2]"
+    "conf.group.select.all.checkbox": (
+        By.XPATH, "(//input[contains(@class,'ng-pristine ng-untouched ng-valid ng-empty')])[2]"
     )
-
 })

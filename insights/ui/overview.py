@@ -23,42 +23,11 @@ class Overview(Base):
     def overview_latest_news(self):
         return self.find_element(locators['overview.latest.news']).text
 
-    def overview_action_availability(self):
-        self.wait_until_element(locators['overview.actions.availability'], timeout=50)
-        return self.find_element(locators['overview.actions.availability']).text
-
-    def overview_action_avl_count(self):
-        return self.find_element(locators['overview.availability.num']).text
-
-    def overview_action_stability(self):
-        return self.find_element(locators['overview.actions.stability']).text
-
-    def overview_action_stable_count(self):
-        return self.find_element(locators['overview.stability.num']).text
-
-    def overview_action_performance(self):
-        return self.find_element((locators['overview.actions.performance'])).text
-
-    def overview_action_perf_count(self):
-        return self.find_element(locators['overview.performance.num']).text
-
-    def overview_action_security(self):
-        return self.find_element(locators['overview.actions.security']).text
-
-    def overview_action_security_count(self):
-        return self.find_element(locators['overview.security.num']).text
-
     def go_to_overview_view_actions(self):
         self.click(locators['overview.viewactions'])
 
     def overview_newest_summary(self):
         return self.find_element(locators['overview.newest.summary']).text
-
-    def overview_newset_first_system(self):
-        return self.find_element(locators['overview.newest.firstsystem']).text
-
-    def overview_newset_all_systems(self):
-        return self.find_element(locators['overview.newest.allsystem'])
 
     def go_to_overview_view_inventory(self):
         self.click(locators['overview.viewinventory'])
