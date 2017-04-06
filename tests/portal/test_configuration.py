@@ -19,7 +19,7 @@ class ConfigurationTabTestCase(UITestCase):
                              self.configuration.conf_hidden_rule_info())
             # Checking Groups section
             self.configuration.conf_group_tab()
-            self.configuration.conf_group_search_box(search=123)
+            self.configuration.conf_group_search_box(search='abc')
             self.assertEqual("Add Group", self.configuration.conf_add_group_text())
             self.configuration.conf_add_group_button()
             self.assertEqual("Groups List", self.configuration.conf_group_list_text())
